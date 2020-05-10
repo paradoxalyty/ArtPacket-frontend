@@ -456,7 +456,7 @@ h3{
         height: 49px;
         border: 4px solid #F98832;
         border-radius: 10px;
-        background: #FFF;
+        background: #F98832;
 
         font-family: 'MPLUS-Medium', sans-serif;
         font-style: normal;
@@ -470,12 +470,12 @@ h3{
 
         &:hover {
             color: white;
-            background: #F98832;
         }
 
         &:active {
             border: 4px solid #D5742E;
-            color: #111111;
+            color: #282F32;
+            background: #D5742E;
         }
     }
 }
