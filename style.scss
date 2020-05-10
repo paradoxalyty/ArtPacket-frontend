@@ -12,6 +12,16 @@ body{
     display: flex;
     flex-direction: column;
 }
+h3{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 47px;
+
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 .header{
     display: flex;
     flex-direction: row;
@@ -291,6 +301,76 @@ body{
         }
     }
 }
+
+
+
+
+
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 35px 34px;
+    background: #282F32;
+    color: #F5FDFC;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 1px;
+
+    &-logo{
+        flex-basis: 14%;
+        padding-right: 50px;
+        text-align: center;
+
+        &__img{
+            height: 43px;
+            width: 202px;
+        }
+    }
+
+    &-contacts{
+        flex-basis: 16%;
+    }
+
+    &-info {
+        flex-basis: 45%;
+    }
+
+    &-social{
+        flex-basis: 14%;
+        display: flex;
+    }
+
+    &-social a{
+        width: 50px;
+        height: 50px;
+        margin: 0 9px;
+        background-repeat: no-repeat;
+    }
+
+    &-social .icon-instagram{
+        background-image: url("img/icon-instagram.png");
+        &:hover{}
+    }
+
+    &-social .icon-telegram{
+        background-image: url("img/icon-telegram.png");
+        &:hover{}
+    }
+
+    &-social .icon-facebook{
+        background-image: url("img/icon-facebook.png");
+        &:hover{}
+    }
+}
+
+
+
+
 
 @media screen and (max-width: 767px){
     .header{
