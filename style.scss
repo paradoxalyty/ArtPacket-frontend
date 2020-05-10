@@ -5,6 +5,8 @@
 }
 body{
     font-family: 'M PLUS Rounded 1c', sans-serif;
+    color: #282F32;
+    background: #FFF;
 }
 .container{
     width: 100%;
@@ -305,6 +307,99 @@ h3{
 
 
 
+.howItWorks{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 50px 126px 50px 132px;
+
+    &-item{
+        position: relative;
+        margin-bottom: 20px;
+        padding-left: 185px;
+
+        &:after{
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            color: white;
+            font-size: 36px;
+            text-align: center;
+            line-height: 80px;
+        }
+
+        &:before{
+            position: absolute;
+            top: 40px;
+            left: 38px;
+            display: block;
+            width: 6px;
+            height: 100%;
+            background: #282F32;
+            content: "";
+        }
+    }
+
+    &-item1:after{
+        background: #F98832;
+        content: "1";
+    }
+
+    &-item2:after{
+        background: #04B0B7;
+        content: "2";
+    }
+
+    &-item3:after{
+        background: #0B779D;
+        content: "3";
+    }
+
+    &-item4:after{
+        background: #3E5777;
+        content: "4";
+    }
+
+    &-item4:before{
+        background: #FFF;
+    }
+
+
+
+
+
+
+    &-heading{
+        flex-basis: 100%;
+        margin-bottom: 50px;
+        color: #0B779D;
+    }
+
+    &-topic{
+        margin-bottom: 12px;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 33px;
+    }
+
+    &-text{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: 1px;
+    }
+}
+
+
+
+
 .questions{
     display: flex;
     flex-wrap: wrap;
@@ -366,7 +461,6 @@ h3{
 
 .delivery{
     display: flex;
-    background: #FFFFFF;
 
     &-heading{
         margin-bottom: 80px;
