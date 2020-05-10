@@ -205,13 +205,13 @@ h3 {
 .artSets-item__img {
   width: 200px;
   height: 215px;
-  margin: 0px 37px;
+  margin: 0 37px;
 }
 .artSets-item__imgBtn {
   color: #C4C4C4;
   font-size: 30px;
   font-weight: 500;
-  padding: 90px 0px;
+  padding: 90px 0;
 }
 .artSets-item__h3 {
   margin-top: 12.57px;
@@ -240,7 +240,7 @@ h3 {
   line-height: 30px;
   letter-spacing: 1px;
   color: #000000;
-  margin: 11px 0px 21px 0px;
+  margin: 11px 0 21px 0;
 }
 .artSets-sizes {
   display: flex;
@@ -300,6 +300,53 @@ h3 {
 }
 .artSets-btn__block:active > a {
   color: #282F32;
+}
+
+.questions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 50px 154px 60px 124px;
+}
+.questions-heading {
+  flex-basis: 100%;
+  color: #F98832;
+  margin-bottom: 50px;
+}
+.questions-item {
+  flex-basis: 48%;
+  margin-bottom: 38px;
+}
+.questions-question {
+  margin-bottom: 40px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 42px;
+}
+.questions-answer {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 1px;
+}
+.questions-btn {
+  width: 340px;
+  height: 49px;
+  background: #F98832;
+  border-radius: 10px;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  outline: none;
+}
+.questions-btn:active {
+  color: white;
 }
 
 .delivery {
