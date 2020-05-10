@@ -411,10 +411,12 @@ h3{
         color: #F98832;
         margin-bottom: 50px;
     }
+    &-left,
+    &-right{
+        flex-basis: 48%;
+    }
 
     &-item{
-        flex-basis: 48%;
-        margin-bottom: 38px;
     }
 
     &-question{
@@ -426,6 +428,7 @@ h3{
     }
 
     &-answer{
+        margin-bottom: 38px;
         font-style: normal;
         font-weight: normal;
         font-size: 18px;
