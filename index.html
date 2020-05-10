@@ -11,12 +11,12 @@
     <div class="container">
         <header class="header">
             <div class="header-logo">
-                <img src="./img/logo.png" alt="logo" class="header-logo__img"></img>
+                <img src="./img/logo.png" alt="logo" class="header-logo__img">
             </div>
             <div class="header-nav">
                 <ul class="header-list">
                     <li class="header-list__item">
-                        <a href="#" class="header-link">Арт-боксы</a>                    </li>
+                        <a href="#artSets" class="header-link">Арт-боксы</a>                    </li>
                     <li class="header-list__item">
                         <a href="#" class="header-link">Инструкция</a>
                     </li>
@@ -29,27 +29,35 @@
                 <div class="header-contacts__item">
                     г. Санкт-Петербург
                 </div>
-                <div class="header-contacts__item">
+                <!-- <div class="header-contacts__item">
                     lubovesikova@gmail.com
-                </div>
+                </div> -->
                 <div class="header-contacts__item">
                     +7 981 802 6575
                 </div>
             </div>
         </header>
         <main class="main">
-            <article class="fluidArt">
-                <h2 class="fluidArt-caption">
+            <article class="banner">
+                <h2 class="banner-caption">
                     FLUID ART
                 </h2>
-                <p class="fluidArt-text">
+                <p class="banner-text">
                     это техника создания абстракций. Вы сможете создать картину, даже если никогда не рисовали и у вас нет художественного образования.
                 </p>
-                <button class="fluidArt-btn">
+                <button class="banner-btn">
                     Напиши нам
                 </button>
             </article>
-            <article class="artSets">
+            <article class="artSets" id="artSets"> 
+                <div class="artSets-caption">
+                    <div class="artSets-caption__logo"></div>
+                    <div class="artSets-caption__text">НАБОРЫ</div>
+                </div>
+                <div class="artSets-carouselBlock">
+                <div class="artSets-carousel"></div>
+                <div class="artSets-carouselScroll"></div>
+                </div>
             </article>
             <article class="howItWorks">
             </article>
@@ -61,6 +69,6 @@
         <footer class="footer">
         </footer>
     </div>
-    
+    <script src="script.js" ></script>
 </body>
 </html>
