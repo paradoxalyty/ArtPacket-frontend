@@ -306,6 +306,68 @@ h3{
 
 
 
+.delivery{
+    display: flex;
+    background: #FFFFFF;
+
+    &-heading{
+        margin-bottom: 80px;
+        color: #04B0B7
+    }
+
+    &-info{
+        padding: 50px 90px;
+    }
+
+    &-list{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 75%;
+    }
+
+    &-item{
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 90px;
+        margin-bottom: 50px;
+        list-style-type: none;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 1px;
+    }
+
+    &-item:before{
+        position: absolute;
+        left: 0;
+        display: block;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        content: "";
+    }
+
+    &-contactless:before {
+        background: url("img/delivery-contactless.png") #F98832 center no-repeat;
+    }
+
+    &-courier:before {
+        background: url("img/delivery-courier.png") #3E5777 center no-repeat;
+    }
+
+    &-rus:before {
+        background: url("img/delivery-rus.png") #04B0B7 center no-repeat;
+    }
+}
+
+
+
+
+
 
 .footer{
     display: flex;
