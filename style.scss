@@ -353,10 +353,10 @@ h3{
 
         cursor: pointer;
         outline: none;
-    }
 
-    &-btn:active {
-        color: white;
+        &:active {
+            color: white;
+        }
     }
 }
 
