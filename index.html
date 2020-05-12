@@ -4,71 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtPacket</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="header-logo">
-                <img src="./img/logo.png" alt="logo" class="header-logo__img">
+<div class="container">
+    <header class="header">
+        <div class="header-logo">
+            <img src="./img/logo.png" alt="logo" class="header-logo__img">
+        </div>
+        <div class="header-nav">
+            <ul class="header-list">
+                <li class="header-list__item">
+                    <a href="#artSets" class="header-link">Арт-боксы</a></li>
+                <li class="header-list__item">
+                    <a href="#howItWorks" class="header-link">Инструкция</a>
+                </li>
+                <li class="header-list__item">
+                    <a href="#delivery" class="header-link">Доставка</a>
+                </li>
+            </ul>
+        </div>
+        <div class="header-contacts">
+            <div class="header-contacts__item">
+                г. Санкт-Петербург
             </div>
-            <div class="header-nav">
-                <ul class="header-list">
-                    <li class="header-list__item">
-                        <a href="#artSets" class="header-link">Арт-боксы</a>                    </li>
-                    <li class="header-list__item">
-                        <a href="#" class="header-link">Инструкция</a>
+            <!-- <div class="header-contacts__item">
+                lubovesikova@gmail.com
+            </div> -->
+            <div class="header-contacts__item">
+                +7 981 802 6575
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <article class="banner">
+            <h2 class="banner-caption">
+                FLUID ART
+            </h2>
+            <p class="banner-text">
+                это техника создания абстракций. Вы сможете создать картину, даже если никогда не рисовали и у вас нет
+                художественного образования.
+            </p>
+            <button class="banner-btn">
+                Напиши нам
+            </button>
+        </article>
+        <article class="artSets" id="artSets">
+            <div class="artSets-caption">
+                <div class="artSets-caption__logo"></div>
+                <div class="artSets-caption__text">НАБОРЫ</div>
+            </div>
+            <div class="artSets-carouselBlock">
+               <!--Bootstrap slider-->
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                        
+                      </ol>
+                      <div class="carousel-inner">
+                        
+                      </div>
+                      
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    
+                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                <!-- -->
+            </div>
+        </article>
+        <article class="howItWorks" id="howItWorks">
+            <h3 class="howItWorks-heading">как это работает</h3>
+            <div class="howItWorks-item howItWorks-item1">
+                <h5 class="howItWorks-topic">Создайте нужный тон красок</h5>
+                <p class="howItWorks-text">Достаньте из пакета пленку и постелите ее на пол или стол, наденьте перчатки,
+                    замешиваете краски в стаканчиках, Налейте в 2-4 стаканчика краски из бутылок, вы можете
+                    скорректировать тон, не бойтесь смешивать их в любых пропорциях.</p>
+            </div>
+            <div class="howItWorks-item howItWorks-item2">
+                <h5 class="howItWorks-topic">Добавьте медиум</h5>
+                <p class="howItWorks-text">Возьмите бутылочку с маркировкой М и добавьте жидкость к краскам. Примерное
+                    соотношение 1:1, сразу добавьте столько же воды и размешайте. Состав должен быть как тесто для
+                    блинов / кефир / жидкая сметана. Если получилось слишком жидко, добавьте немного краски или медиума,
+                    если слишком густо, добавьте еще воды.</p>
+            </div>
+            <div class="howItWorks-item howItWorks-item3">
+                <h5 class="howItWorks-topic">Последняя подготовка красок</h5>
+                <p class="howItWorks-text">В 1 пустой стакан слейте краски из стаканчиков , можно чередовать краски
+                    между собой, можно выливать полностью. Старайтесь лить в центр стакана, чем выше вы поднимаете руку,
+                    тем сильнее краски будут смешиваться друг с другом.</p>
+            </div>
+            <div class="howItWorks-item howItWorks-item4">
+                <h5 class="howItWorks-topic">Создайте шедевр </h5>
+                <p class="howItWorks-text">Переверните стакан на холст / арт-борд в центре. Подождите 1-2 секунды и
+                    резко поднимите стакан. Старайтесь это сделать быстро, чтобы капли из стакана не капали в лужу с
+                    краской. Возьмите холст / арт-борд в руки и помогите краске заполнить всю площадь, краска должна
+                    стекать по краям. Наклоняйте холст плавно, буквально на 2-5 мм и следите за движением краски.
+                    Переверните стаканчики дном наверх, поставьте холст / арт-борд на стаканчики и оставьте работу
+                    высыхать.</p>
+            </div>
+        </article>
+        <article class="questions">
+            <h3 class="questions-heading">частые вопросы</h3>
+            <div class="questions-left">
+                    <h5 class="questions-question">Сколько сохнет картина?</h5>
+                    <p class="questions-answer">От 2 до 4 дней в зависимости от влажности в помещении и количества краски на
+                        холсте.</p>
+                    <h5 class="questions-question">Чем покрыть работу?</h5>
+                    <p class="questions-answer">Для сохранения цвета рекомендуется покрыть работу акриловым лаком (глянцевым
+                        или матовым) .</p>
+                    <h5 class="questions-question">Работа изменила цвет и эффекты, что делать?</h5>
+                    <p class="questions-answer">Это нормально, при высыхании картина становится на 2-4 тона темнее,
+                        некоторые эффекты уходят, некоторые проявляются с течением времени. После окончания работы над
+                        картиной, она живет своей жизнью еще 1-2 часа.
+                        При полном высыхании могут проявиться рельефы, добавляйте больше воды, если не любите
+                        рельефность.</p>
+            </div>
+            <div class="questions-right">
+                    <h5 class="questions-question">Что входит в набор ?</h5>
+                    <p class="questions-answer">Инструкция, холст, краски, медиум, перчатки и пленка, стаканы и палочки</p>
+                    <h5 class="questions-question">Что делать, если краска попала на одежду/кожу?</h5>
+                    <p class="questions-answer">При попадании на одежду нужно промыть как можно скорее с мылом.
+                        <br>При попадании краски на тело, промойте кожу в ближайшие 40-60 минут с мылом и губкой. Краска
+                        тяжело отмывается в зоне ногтевой пластины, рекомендуем использовать перчатки из набора , но можете
+                        работать без них.
+                    </p>
+                    <h5 class="questions-question">Остались вопросы?</h5>
+                    <button class="questions-btn">Заказать консультацию</button>
+            </div>
+        </article>
+        <article class="delivery" id="delivery">
+            <div class="delivery-map">
+                <iframe class="delivery-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1999.644568878973!2d30.305374216005337!3d59.92144598186986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x469630fc0e4fc729%3A0xe280f4061d9d72c2!2z0J_QvtGH0YLQsCDQoNC-0YHRgdC40Lg!5e0!3m2!1sru!2sde!4v1589028645621!5m2!1sru!2sde"
+                        style="border:0;" allowfullscreen="" aria-hidden="false"
+                        tabindex="0"></iframe>
+            </div>
+            <div class="delivery-info">
+                <h3 class="delivery-heading">доставка</h3>
+                <ul class="delivery-list">
+                    <li class="delivery-item delivery-contactless">Все заказы доставляются бесконтактной доставкой.</li>
+                    <li class="delivery-item delivery-courier">В день доставки с вами свяжется курьер для подтверждения.
+                        Сообщите ему, где оставить для вас заказ. При пропущенном звонке заказ может быть отменен.
                     </li>
-                    <li class="header-list__item">
-                        <a href="#" class="header-link">Доставка</a>
-                    </li>
+                    <li class="delivery-item delivery-rus">Доставка по всей России.</li>
                 </ul>
             </div>
-            <div class="header-contacts">
-                <div class="header-contacts__item">
-                    г. Санкт-Петербург
-                </div>
-                <!-- <div class="header-contacts__item">
-                    lubovesikova@gmail.com
-                </div> -->
-                <div class="header-contacts__item">
-                    +7 981 802 6575
-                </div>
-            </div>
-        </header>
-        <main class="main">
-            <article class="banner">
-                <h2 class="banner-caption">
-                    FLUID ART
-                </h2>
-                <p class="banner-text">
-                    это техника создания абстракций. Вы сможете создать картину, даже если никогда не рисовали и у вас нет художественного образования.
-                </p>
-                <button class="banner-btn">
-                    Напиши нам
-                </button>
-            </article>
-            <article class="artSets" id="artSets"> 
-                <div class="artSets-caption">
-                    <div class="artSets-caption__logo"></div>
-                    <div class="artSets-caption__text">НАБОРЫ</div>
-                </div>
-                <div class="artSets-carouselBlock">
-                <div class="artSets-carousel"></div>
-                <div class="artSets-carouselScroll"></div>
-                </div>
-            </article>
-            <article class="howItWorks">
-            </article>
-            <article class="questions">
-            </article>
-            <article class="delivery">
-            </article>
-        </main>
-        <footer class="footer">
-        </footer>
-    </div>
-    <script src="script.js" ></script>
+        </article>
+    </main>
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="./img/logo-white.png" alt="logo" class="footer-logo__img">
+            <p>г. Санкт-Петербург</p>
+        </div>
+        <div class="footer-contacts">
+            <p class="footer-phone">+7 981 802 6575</p>
+            <p class="footer-mail">lubovesikova@gmail.com</p>
+        </div>
+        <p class="footer-info">По любым вопросам и для заказа свяжитесь с нами по телефону, почте или в соцсетях.</p>
+        <div class="footer-social">
+            <a href="#" class="icon-instagram"></a>
+            <a href="#" class="icon-telegram"></a>
+            <a href="#" class="icon-facebook"></a>
+        </div>
+    </footer>
+    
+</div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src="script.js"></script>
 </body>
 </html>

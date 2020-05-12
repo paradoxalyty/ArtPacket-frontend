@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "MPLUS-Light";
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/MPLUSRounded1c-Light.ttf");
+}
+
+@font-face {
+    font-family: "MPLUS-Regular";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/MPLUSRounded1c-Regular.ttf");
+}
+
+@font-face {
+    font-family: "MPLUS-Medium";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/MPLUSRounded1c-Medium.ttf");
+}
+
+@font-face {
+    font-family: "MPLUS-Black";
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/MPLUSRounded1c-ExtraBold.ttf");
+}
