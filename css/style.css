@@ -804,6 +804,9 @@ h3 {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;
   }
+  .artSets-block {
+    width: 100%;
+  }
   .questions-left, .questions-right {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;
