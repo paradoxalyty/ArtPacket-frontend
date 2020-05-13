@@ -1,149 +1,235 @@
 'use strict'
-
-const artSets = [
-    {
-        id: 1,
-        picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-        name: "Название",
-        price: 1100,
-        sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
-        currentSize: 30
-    },
-    {
-        id: 2,
-        picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-        name: "Название 2",
-        price: 1200,
-        sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
-        currentSize: 30
-    },
-    {
-        id: 3,
-        picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-        name: "Название 3",
-        price: 1300,
-        sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
-        currentSize: 30
-    },
-    {
-        id: 4,
-        picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-        name: "Название 4",
-        price: 1400,
-        sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
-        currentSize: 30
-    }
-];
-
-// let artSets_activePage = 0;
-
-function prettify(num) {
-    var n = num.toString();
-    return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
-}
-
-function makeSizeHTML(sizeArr, id){
-    let artSetsSizeCode = ``;
-    for (let si = 0; si < sizeArr.length; si++){
-        artSetsSizeCode += `<div class="artSets-sizeBlock">
-            <input type="radio" id="size-${id}-${sizeArr[si].sizename}" ${si === 0 ? "checked" : ""}>
-            <label for="size-${id}-${sizeArr[si].sizename}" class="artSets-sizename">${sizeArr[si].sizename}</label>
-        </div>`;
-    }
-    return artSetsSizeCode;
-}
-
-function makeArtSetBlock(elem){
-    let artSetCode = `<div class="artSets-block" id="${elem.id}">
-                        <img src="${elem.picture[0]}" alt="artSetImg" class="artSets-img">
-                        <div class="artSets-name">${elem.name}</div>
-                        <div class="artSets-price">${prettify(elem.price)} руб.</div>
-                        <form >
-                        <div class="artSets-size__title">Размер</div>
-                        <div class="artSets-size__block">
-                            ${makeSizeHTML(elem.sizes, elem.id)}
-                        </div>
-                        <input type="button" class="artSets-btn" value="Заказать">
-                        </form>
-                    </div>`;
-    return artSetCode;
-}
-
-function fillHTML(){
-    let cindicatorsHTML = ``;
-    let cInnerHTML = ``;
-    if (screen.width < 767) {
-        //mobile
-        for (let i = 0; i < artSets.length; i++){
-            cindicatorsHTML += `<li data-target="#carouselExampleIndicators" data-slide-to="${i}"${i === 0? ` class="active"` : ""}></li>`; 
-            cInnerHTML += `<div class="carousel-item${i === 0 ? " active": ""}"><div class="artSets-item">${makeArtSetBlock(artSets[i])}</div></div>`;
+/**
+ * Компонент карусели картинок набора
+ */
+const VCarouselImages = {
+    name: 'v-carousel-images',
+    props: ['images'],
+    data: () =>({
+        activeImage: 0,
+    }),
+    template: `<div class="v-carousel-image">
+                <div :class="prevBtnClass()" @click="prevImage">&lt;</div>
+                <div class="v-carousel-image__img">
+                    <img :src="images[this.activeImage]" alt="Set picture" class="v-carousel-image__img__pic">
+                </div>
+                <div :class="nextBtnClass()" @click="nextImage">&gt;</div>
+            </div>`,
+    methods: {
+        prevImage(){
+            if (this.activeImage > 0){
+                this.activeImage -=1;
+            }
+        },
+        nextImage(){
+            if (this.activeImage < this.images.length - 1){
+                this.activeImage +=1;
+            }
+        },
+        prevBtnClass(){
+            return this.activeImage > 0 ? "v-carousel-image__left v-carousel-image__left__active" : "v-carousel-image__left";
+        },
+        nextBtnClass(){
+            return this.activeImage < this.images.length - 1 ? "v-carousel-image__right v-carousel-image__right__active" : "v-carousel-image__right";
         }
-    } else {
-        //desctop
-        for (let i = 0; i < artSets.length / 3; i++){
-            cindicatorsHTML += `<li data-target="#carouselExampleIndicators" data-slide-to="${i}"${i === 0? ` class="active"` : ""}></li>`; 
-            cInnerHTML += `<div class="carousel-item${i === 0 ? " active": ""}"><div class="artSets-item">`;
-                for (let j = 0; j < 3; j++){
-                    if ((i * 3 + j)<artSets.length){
-                        cInnerHTML += `${makeArtSetBlock(artSets[i * 3 + j])}`;
-                    }
-                }
-            cInnerHTML += `</div></div>`;
+    }
+};
+
+/**
+ * Компонент блока "размер"
+ */
+const vCarouselSizesBlock = {
+    name: 'v-carousel-sizes-block',
+    props: ['size', 'activeSize'],
+    template: `<div class="v-carousel-sizes-block" @click="setActiveSize">
+                <div :class="sizeBlockClass()">
+                    {{size.sizename}}
+                </div>
+                <div class="v-carousel-sizes-block__sizevalue">
+                    {{size.size}} см
+                </div>
+            </div>`,
+    methods: {
+        sizeBlockClass(){
+            return this.size.sizename === this.activeSize ? "v-carousel-sizes-block__sizename v-carousel-sizes-block__sizename__active" : "v-carousel-sizes-block__sizename";
+        },
+        setActiveSize(){
+            this.$emit('setActiveSize',  this.size.sizename);
+        }
+    },
+};
+
+/**
+ * Компонент блока "размеры"
+ */
+const VCarouselSizes = {
+    name: 'v-carousel-sizes',
+    props: ['sizes'],
+    components: {
+        vCarouselSizesBlock
+    },
+    data: () =>({
+        activeSize: "S",
+    }),
+    template: `<div class="v-carousel-sizes">
+                <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activeSize" @setActiveSize = "setActiveSize" :key="size.sizename" />
+            </div>`,
+    methods:{
+        setActiveSize(sizeName){
+            this.activeSize = sizeName;
         }
     }
 
-    document.querySelector(".carousel-indicators").innerHTML = cindicatorsHTML;
-    document.querySelector(".carousel-inner").innerHTML = cInnerHTML;
-}
+};
 
-fillHTML();
-// function artSets_scrollHandle(event){
-//     console.log(event);
-// }
+/**
+ * Компонент блока "карточка товара"
+ */
+const VCarouselItem = {
+    name: 'v-carousel-item',
+    props: ['card'],
+    components: {
+        VCarouselImages,
+        VCarouselSizes
+    },
+    template: `<div class="v-carousel-item">
+        <v-carousel-images :images="card.picture" />
+        <div class="v-carousel-item__name">{{card.name}}</div>
+        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
+        <div class="v-carousel-item__sizeTitle">Размер</div>
+        <form>
+        <v-carousel-sizes :sizes="card.sizes" />
+        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
+        </form>
+    </div>`,
+    methods:{
+        prettify(num) {
+            var n = num.toString();
+            return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
+        }
+    }
 
-// let artSet_code = ``;
-// for (let i = artSets_activePage * 3; i < (artSets_activePage + 1) * 3; i++) {
-//     let artSet_code_item = `<div class="artSets-item" >`;
-//     let artSet_i = artSets[i];
-//     let artSet_price_str = prettify(artSet_i.price);
-//     artSet_code_item += `<div class="artSets-item__imgBlock">
-//                         <div class="artSets-item__imgBtn">&lt;</div>
-//                         <img src="${artSet_i.picture[0]}" alt="Set ${i} picture" class="artSets-item__img">
-//                         <div class="artSets-item__imgBtn">&gt;</div>
-//                     </div>
-//                     <h3 class="artSets-item__h3">${artSet_i.name}</h3>
-//                     <p class="artSets-item__price">${artSet_price_str}<span class="artSets-item__currency"> руб.</span></p>
-//                     <p class="artSets-size__caption">Размер</p>
-//                     <div class="artSets-sizes">`;
-//     artSet_i.sizes.forEach(element => {
-//         let sizesClassName = "artSets-sizes__name";
-//         if (element.size === artSet_i.currentSize){
-//             sizesClassName = "artSets-sizes__name artSets-sizes__name__active"; 
-//         }
-//         console.log(sizesClassName);
-//         artSet_code_item += `<div class="artSets-sizes-block">
-//                             <a href="#name${artSet_i.id+element.sizename}" class="${sizesClassName}" id="name${artSet_i.id+element.sizename}">${element.sizename}</a>
-//                             <div class="artSets-sizes__size">${element.size} см</div>
-//                         </div>`;
-//     });
-//     artSet_code_item += `</div>
-//                     <div class="artSets-btn__block">
-//                     <a class="artSets-btn">Заказать</a>
-//                     </div>
-//                     </div>`;
-//     artSet_code += artSet_code_item;
-// }
+};
 
-// let carouselPages_code = "";
+/**
+ * Компонент карусели "Арт-наборы"
+ */
+const VCarousel = {
+    name: 'v-carousel',
+    props:['artSetsData'], 
+    components: {
+        VCarouselItem,
+    },
+    data: () =>({
+        activePage: 0,
+    }),
+    template: `<div class="v-carousel">
+        <div class="v-carousel-inner" @wheel="scrollHandle">
+            <v-carousel-item v-for="card in pageItems" :card = "card" :key="card.id" />
+        </div>
+        <div :class="btnLeftClass()" @click="scrollLeft"><p>&lt;</p></div>
+        <div :class="btnRightClass()" @click = "scrollRight"><p>&gt;</p></div>
+        <div class = "v-carousel-nav">
+            <div v-for="ni in this.pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
+        </div>
+    </div>`,
+    methods: {
+        scrollLeft(){
+            if (this.activePage > 0){
+                this.activePage -= 1;
+            }
+        },
+        scrollRight(){
+            if (this.activePage <  this.pageCount - 1){
+               this.activePage += 1;
+            }
+        },
+        navItemClass(itemId){
+            return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
+        },
+        btnLeftClass(){
+            return this.activePage > 0 ? "v-carousel-btn__left v-carousel-btn__left__active": "v-carousel-btn__left";
+        },
+        btnRightClass(){
+            return this.activePage < (this.pageCount - 1) ? "v-carousel-btn__right v-carousel-btn__right__active": "v-carousel-btn__right";
+        },
+        setActivePage(navitemId){
+            this.activePage = navitemId - 1;
+        },
+        scrollHandle(event){
+            event.preventDefault();
+            if (event.deltaY > 0){
+                this.scrollRight();
+            } else if (event.deltaY < 0){
+                this.scrollLeft();
+            }
+        }
 
-// for (let j = 0; j < artSets.length / 3; j++){
-//     let pageClass = "artSets-carousel-pages";
-//     if (j === artSets_activePage){
-//         pageClass += " artSets-carousel__activePage";
-//     }
-//     carouselPages_code += `<div class="${pageClass}" id=${j}></div>`;
-// }
+    },
+    computed: {
+        isDesctop(){
+            return screen.width > 767 ? true : false
+        },
+        pageItems(){
+            let itemsCount = this.isDesctop ? 3 : 1;
+            return this.artSetsData.slice(this.activePage * itemsCount, this.activePage * itemsCount + itemsCount)
+        },
+        pageCount(){
+            return this.isDesctop ? Math.ceil(this.artSetsData.length / 3) : this.artSetsData.length;
+            
+        },
+        
+    }
+};
 
-// document.querySelector(".artSets-carousel").innerHTML = artSet_code;
-// document.querySelector(".artSets-carouselScroll").innerHTML = carouselPages_code;
-// document.querySelector(".artSets-carouselBlock").addEventListener('scroll', event => {artSets_scrollHandle(event)})
+const app = new Vue({
+    el: '#app',
+    data:{
+        artSetsData: [
+            {
+                id: 1,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название",
+                price: 1100,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 2,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 2",
+                price: 1200,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 3,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 3",
+                price: 1300,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 4,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 4",
+                price: 1400,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            }
+        ]
+        
+    },
+    components:{
+        VCarousel,
+    },
+    methods:{
+        
+    },
+    // computed:{
+    //     isDesctop(){
+    //         return screen.width > 767 ? true : false;
+    //     }
+    // }
+});
