@@ -8,7 +8,7 @@
 
 body {
   color: #282F32;
-  background: #FFF;
+  background: #E5E5E5;
 }
 
 .container {
@@ -20,8 +20,12 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   max-width: 1440px;
-  height: 100vh;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: 0 auto;
+  background-color: #ffffff;
+  padding: 0;
 }
 
 h3 {
@@ -190,7 +194,6 @@ h3 {
 }
 
 .artSets {
-  min-height: 894px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -230,48 +233,41 @@ h3 {
 
 .artSets-carouselBlock {
   width: 100%;
-  min-height: 800px;
   position: relative;
 }
 
-.artSets-item {
+.v-carousel-inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  text-align: left;
-  padding: 58px 92px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+  padding: 50px 100px 100px;
+  -webkit-transition: 3s;
+  transition: 3s;
 }
 
-.artSets-block {
-  width: 33%;
+.v-carousel-item {
+  width: 30%;
   -webkit-box-flex: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  text-align: center;
+  padding: 3%;
   border: 1px solid #B0B0B0;
   padding: 27px;
   border-radius: 2px;
 }
 
-.artSets-block:not(:last-of-type) {
-  margin-right: 5%;
-}
-
-.artSets-img {
-  width: 80%;
-  margin-left: 10%;
-}
-
-.artSets-name {
+.v-carousel-item__name {
   margin-top: 12.57px;
   margin-bottom: 5px;
   font-style: normal;
@@ -282,7 +278,7 @@ h3 {
   text-align: center;
 }
 
-.artSets-price {
+.v-carousel-item__price {
   border-top: 1px solid #3E5777;
   border-bottom: 1px solid #3E5777;
   font-family: 'MPLUS-Medium', sans-serif;
@@ -294,7 +290,7 @@ h3 {
   text-align: center;
 }
 
-.artSets-size__title {
+.v-carousel-item__sizeTitle {
   font-weight: 500;
   font-size: 20px;
   line-height: 30px;
@@ -304,49 +300,7 @@ h3 {
   text-align: center;
 }
 
-.artSets-size__block {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-}
-
-.artSets-sizeBlock > input {
-  display: none;
-}
-
-.artSets-sizename {
-  display: inline-block;
-  font-style: normal;
-  font-family: 'MPLUS-Medium', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 20px;
-  width: 45px;
-  height: 45px;
-  text-decoration: none;
-  border: 1px solid #282F32;
-  border-radius: 3px;
-  padding: 12px 0;
-  text-align: center;
-}
-
-.artSets-sizename:checked {
-  border: 3px solid #F98832;
-}
-
-.artSets-sizename:hover {
-  border: 3px solid #F98832;
-}
-
-.artSets-btn {
+.v-carousel-item__button {
   font-weight: 500;
   font-size: 20px;
   line-height: 30px;
@@ -362,48 +316,210 @@ h3 {
   width: 100%;
 }
 
-.artSets-btn:hover {
+.v-carousel-item__button:hover {
   background: #F98832;
   color: white;
 }
 
-.artSets-btn:active {
+.v-carousel-item__button:active {
   background: #D5742E;
   border: 4px solid #D5742E;
   color: #282F32;
 }
 
-/*Bootstrap redefine*/
-.carousel {
-  min-height: 800px;
+.v-carousel-btn__left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  font-size: 45px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: white;
 }
 
-.carousel-indicators > li {
+.v-carousel-btn__left__active:hover {
+  color: #3E5777;
+}
+
+.v-carousel-btn__left > p {
+  cursor: default;
+}
+
+.v-carousel-btn__right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  font-size: 45px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: white;
+}
+
+.v-carousel-btn__right__active:hover {
+  color: #3E5777;
+}
+
+.v-carousel-btn__right > p {
+  cursor: default;
+}
+
+.v-carousel-nav {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  /* margin: 0 auto; */
+  left: 0px;
+  bottom: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.v-carousel-nav-item {
   width: 15px;
   height: 15px;
   border-radius: 50%;
   background-color: #04B0B7;
-  margin: 10px;
 }
 
-.carousel-indicators > li.active {
+.v-carousel-nav-item:not(:last-of-type) {
+  margin-right: 20px;
+}
+
+.v-carousel-nav-item__active {
   background-color: #F98832;
 }
 
-.carousel-inner {
-  min-height: 800px;
+.v-carousel-image {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  color: #C4C4C4;
+  font-size: 40px;
+  font-weight: 300;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-.carousel-item {
-  height: 100%;
+.v-carousel-image__left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-right: 10%;
+  cursor: default;
 }
 
-.carousel-control-prev {
-  width: 5%;
+.v-carousel-image__left__active {
+  color: #343434;
+  cursor: pointer;
 }
 
-.carousel-control-next {
-  width: 5%;
+.v-carousel-image__right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-left: 10%;
+  cursor: default;
+}
+
+.v-carousel-image__right__active {
+  color: #343434;
+  cursor: pointer;
+}
+
+.v-carousel-image__img {
+  width: 90%;
+}
+
+.v-carousel-image__img__pic {
+  width: 100%;
+}
+
+.v-carousel-sizes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.v-carousel-sizes-block {
+  -ms-flex-preferred-size: 15%;
+      flex-basis: 15%;
+}
+
+.v-carousel-sizes-block__sizename {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #282F32;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 45px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: black;
+  cursor: pointer;
+}
+
+.v-carousel-sizes-block__sizename__active {
+  border: 3px solid #F98832;
+}
+
+.v-carousel-sizes-block__sizevalue {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #000000;
+  margin-top: 5px;
 }
 
 .howItWorks {
@@ -805,6 +921,12 @@ h3 {
         flex-basis: 100%;
   }
   .artSets-block {
+    width: 100%;
+  }
+  .v-carousel-inner {
+    padding: 10%;
+  }
+  .v-carousel-item {
     width: 100%;
   }
   .questions-left, .questions-right {
