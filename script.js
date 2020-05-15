@@ -69,7 +69,7 @@ const VCarouselSizes = {
         vCarouselSizesBlock
     },
     data: () =>({
-        activeSize: "S",
+        activeSize: "M",
     }),
     template: `<div class="v-carousel-sizes">
                 <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activeSize" @setActiveSize = "setActiveSize" :key="size.sizename" />
@@ -82,6 +82,14 @@ const VCarouselSizes = {
 
 };
 
+const VCarouselDescriptionListItem = {
+    name: 'v-carousel-description-list-item',
+    props: ['description'],
+    template: `<li class="v-carousel-description-list-item">
+                <span>{{description}}</span>
+            </li>`
+};
+
 /**
  * Компонент блока "карточка товара"
  */
@@ -90,22 +98,49 @@ const VCarouselItem = {
     props: ['card'],
     components: {
         VCarouselImages,
-        VCarouselSizes
+        VCarouselSizes,
+        VCarouselDescriptionListItem
     },
+    data: () =>({
+        descriptionOpened: false,
+    }),
     template: `<div class="v-carousel-item">
-        <v-carousel-images :images="card.picture" />
-        <div class="v-carousel-item__name">{{card.name}}</div>
-        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
-        <div class="v-carousel-item__sizeTitle">Размер</div>
-        <form>
-        <v-carousel-sizes :sizes="card.sizes" />
-        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
-        </form>
-    </div>`,
+                    <v-carousel-images :images="card.picture" />
+                    <div class="v-carousel-item__nameBlock">
+                        <div class="v-carousel-item__name">{{card.name}}</div>
+                        <div :class="this.detailsClass" @click="changeOpened">&lt;</div>
+                    
+                        <div :class="this.descriptionClass">
+                            <div class="v-carousel-description-title">Описание:</div>
+                            <ul class="v-carousel-description-list">
+                                <v-carousel-description-list-item v-for="description in card.descriptions" :description="description" />
+                            </ul>
+                        </div>
+                    </div>
+                        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
+                        <div class="v-carousel-item__sizeTitle">Размер</div>
+                        <form>
+                        <v-carousel-sizes :sizes="card.sizes" />
+                        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
+                        </form>
+                    
+                </div>`,
     methods:{
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
+        },
+        changeOpened(){
+            this.descriptionOpened = !this.descriptionOpened;
+            console.log('descriptionOpened', this.descriptionOpened);
+        }
+    },
+    computed:{
+        descriptionClass(){
+            return this.descriptionOpened ? "v-carousel-description" : "v-carousel-description v-carousel-description__hidden";
+        },
+        detailsClass(){
+            return this.descriptionOpened ? "v-carousel-item__name__details" : "v-carousel-item__name__details v-carousel-item__name__details__rotated";
         }
     }
 
@@ -190,6 +225,7 @@ const app = new Vue({
                 id: 1,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1100,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
@@ -198,6 +234,7 @@ const app = new Vue({
                 id: 2,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название 2",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1200,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
@@ -206,6 +243,7 @@ const app = new Vue({
                 id: 3,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название 3",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1300,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
@@ -214,7 +252,26 @@ const app = new Vue({
                 id: 4,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название 4",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1400,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 5,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 5",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
+                price: 1500,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 6,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 6",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
+                price: 1600,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
             }
