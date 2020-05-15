@@ -287,8 +287,8 @@ h3 {
   line-height: 42px;
   color: #282F32;
   text-align: center;
-  -ms-flex-preferred-size: 70%;
-      flex-basis: 70%;
+  -ms-flex-preferred-size: 80%;
+      flex-basis: 80%;
 }
 
 .v-carousel-item__name__details {
@@ -306,7 +306,7 @@ h3 {
 
 .v-carousel-item__name__details__left {
   width: 2px;
-  height: 13.93px;
+  height: 14.93px;
   background: #282F32;
   border-radius: 5px;
   -webkit-transform: rotate(45deg);
@@ -318,7 +318,7 @@ h3 {
 
 .v-carousel-item__name__details__right {
   width: 2px;
-  height: 13.93px;
+  height: 14px;
   background: #282F32;
   border-radius: 5px;
   -webkit-transform: rotate(-45deg);

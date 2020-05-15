@@ -217,7 +217,7 @@ h3{
             line-height: 42px;
             color: #282F32;
             text-align: center;
-            flex-basis: 70%;
+            flex-basis: 80%;
             &__details{
                 width: 25px;
                 height: 25px;
@@ -231,7 +231,7 @@ h3{
                 cursor: pointer;
                 &__left{
                     width: 2px;
-                    height: 13.93px;
+                    height: 14.93px;
                     background: #282F32;
                     border-radius: 5px;
                     transform: rotate(45deg);
@@ -241,7 +241,7 @@ h3{
                 }
                 &__right{
                     width: 2px;
-                    height: 13.93px;
+                    height: 14px;
                     background: #282F32;
                     border-radius: 5px;
                     transform: rotate(-45deg);
