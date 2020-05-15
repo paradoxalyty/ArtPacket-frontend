@@ -136,7 +136,7 @@ h3 {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  background-image: url("../img/fluid_img.jpg");
+  background-image: url("../img/fluid_img.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -267,6 +267,10 @@ h3 {
   border-radius: 2px;
 }
 
+.v-carousel-item__descBlock {
+  position: relative;
+}
+
 .v-carousel-item__nameBlock {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -368,9 +372,10 @@ h3 {
   background-color: white;
   border-top: 1px solid #3E5777;
   padding: 14px;
-  top: 100%;
+  top: 25%;
   left: 0;
   width: 100%;
+  height: 85%;
 }
 
 .v-carousel-description-title {

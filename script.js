@@ -106,23 +106,23 @@ const VCarouselItem = {
     }),
     template: `<div class="v-carousel-item">
                     <v-carousel-images :images="card.picture" />
-                    <div class="v-carousel-item__nameBlock">
-                        <div class="v-carousel-item__name">{{card.name}}</div>
-                        <div :class="this.detailsClass" @click="changeOpened">&lt;</div>
-                    
+                    <div class="v-carousel-item__descBlock">
+                        <div class="v-carousel-item__nameBlock">
+                            <div class="v-carousel-item__name">{{card.name}}</div>
+                            <div :class="this.detailsClass" @click="changeOpened">&lt;</div>
+                        </div>
                         <div :class="this.descriptionClass">
                             <div class="v-carousel-description-title">Описание:</div>
                             <ul class="v-carousel-description-list">
                                 <v-carousel-description-list-item v-for="description in card.descriptions" :description="description" />
                             </ul>
                         </div>
-                    </div>
+                    
                         <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
                         <div class="v-carousel-item__sizeTitle">Размер</div>
-                        <form>
                         <v-carousel-sizes :sizes="card.sizes" />
+                    </div>
                         <input type="button" class="v-carousel-item__button" value="Заказать"></input>
-                        </form>
                     
                 </div>`,
     methods:{
