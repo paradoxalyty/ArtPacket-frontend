@@ -177,25 +177,35 @@ h3{
     }
 }
 .v-carousel{
+    padding: 50px 100px 100px;
     &-inner{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-between;
         position: relative;
-        padding: 50px 100px 100px;
+        padding: 50px 0px 0px;
         transition: 3s;
+        overflow-y: auto;
+        &::-webkit-scrollbar{
+            display: none;
+        }
     }
     &-item{
         // flex-basis: calc((100% - 300px) / 3);
-        width: 30%;
+        flex-basis: 33%;
+        min-width: 349px;
         flex-grow: 0;
+        
         text-align: center;
         padding: 3%;
         
         border: 1px solid #B0B0B0;
         padding: 27px;
         border-radius: 2px;
+        &:not(:last-of-type){
+            margin-right: 97px;
+        }
         // margin-right: 5%;
 
         // &:not(:last-of-type){

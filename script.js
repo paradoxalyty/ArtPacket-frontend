@@ -167,46 +167,30 @@ const VCarousel = {
     data: () =>({
         activePage: 0,
     }),
+    //@wheel="scrollHandle"
     template: `<div class="v-carousel">
         <div class="v-carousel-inner" @wheel="scrollHandle">
-            <v-carousel-item v-for="card in pageItems" :card = "card" :key="card.id" />
-        </div>
-        <div :class="btnLeftClass()" @click="scrollLeft"><p>&lt;</p></div>
-        <div :class="btnRightClass()" @click = "scrollRight"><p>&gt;</p></div>
+            <v-carousel-item v-for="card in artSetsData" :card = "card" :key="card.id" />
+        </div> 
         <div class = "v-carousel-nav">
-            <div v-for="ni in this.pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
+            <div v-for="ni in artSetsData.length" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
         </div>
     </div>`,
     methods: {
-        scrollLeft(){
-            if (this.activePage > 0){
-                this.activePage -= 1;
-            }
-        },
-        scrollRight(){
-            if (this.activePage <  this.pageCount - 1){
-               this.activePage += 1;
-            }
-        },
+       
         navItemClass(itemId){
             return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
         },
-        btnLeftClass(){
-            return this.activePage > 0 ? "v-carousel-btn__left v-carousel-btn__left__active": "v-carousel-btn__left";
-        },
-        btnRightClass(){
-            return this.activePage < (this.pageCount - 1) ? "v-carousel-btn__right v-carousel-btn__right__active": "v-carousel-btn__right";
-        },
+       
         setActivePage(navitemId){
             this.activePage = navitemId - 1;
+            let inner = document.querySelector('.v-carousel-inner');
+            inner.scrollLeft = this.activePage * 300;
         },
         scrollHandle(event){
             event.preventDefault();
-            if (event.deltaY > 0){
-                this.scrollRight();
-            } else if (event.deltaY < 0){
-                this.scrollLeft();
-            }
+            event.currentTarget.scrollLeft += event.deltaY;
+            this.activePage = Math.ceil(event.currentTarget.scrollLeft / 300);
         }
 
     },

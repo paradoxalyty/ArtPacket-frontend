@@ -236,6 +236,10 @@ h3 {
   position: relative;
 }
 
+.v-carousel {
+  padding: 50px 100px 100px;
+}
+
 .v-carousel-inner {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -250,13 +254,20 @@ h3 {
       -ms-flex-pack: justify;
           justify-content: space-between;
   position: relative;
-  padding: 50px 100px 100px;
+  padding: 50px 0px 0px;
   -webkit-transition: 3s;
   transition: 3s;
+  overflow-y: auto;
+}
+
+.v-carousel-inner::-webkit-scrollbar {
+  display: none;
 }
 
 .v-carousel-item {
-  width: 30%;
+  -ms-flex-preferred-size: 33%;
+      flex-basis: 33%;
+  min-width: 349px;
   -webkit-box-flex: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
@@ -265,6 +276,10 @@ h3 {
   border: 1px solid #B0B0B0;
   padding: 27px;
   border-radius: 2px;
+}
+
+.v-carousel-item:not(:last-of-type) {
+  margin-right: 97px;
 }
 
 .v-carousel-item__descBlock {
