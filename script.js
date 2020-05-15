@@ -9,11 +9,17 @@ const VCarouselImages = {
         activeImage: 0,
     }),
     template: `<div class="v-carousel-image">
-                <div :class="prevBtnClass()" @click="prevImage">&lt;</div>
+                <div :class="prevBtnClass()" @click="prevImage">
+                    <div class="v-carousel-image__left__top"></div>
+                    <div class="v-carousel-image__left__bottom"></div>
+                </div>
                 <div class="v-carousel-image__img">
                     <img :src="images[this.activeImage]" alt="Set picture" class="v-carousel-image__img__pic">
                 </div>
-                <div :class="nextBtnClass()" @click="nextImage">&gt;</div>
+                <div :class="nextBtnClass()" @click="nextImage">
+                    <div class="v-carousel-image__right__top"></div>
+                    <div class="v-carousel-image__right__bottom"></div>
+                </div>
             </div>`,
     methods: {
         prevImage(){
@@ -109,7 +115,10 @@ const VCarouselItem = {
                     <div class="v-carousel-item__descBlock">
                         <div class="v-carousel-item__nameBlock">
                             <div class="v-carousel-item__name">{{card.name}}</div>
-                            <div :class="this.detailsClass" @click="changeOpened">&lt;</div>
+                            <div :class="this.detailsClass" @click="changeOpened">
+                                <div class="v-carousel-item__name__details__left"></div>
+                                <div class="v-carousel-item__name__details__right"></div>
+                            </div>
                         </div>
                         <div :class="this.descriptionClass">
                             <div class="v-carousel-description-title">Описание:</div>
@@ -223,7 +232,7 @@ const app = new Vue({
         artSetsData: [
             {
                 id: 1,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                picture: ["./img/artSet_img.png", "./img/artSets-logo.png", "./img/artSet_img.png"],
                 name: "Название",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1100,
