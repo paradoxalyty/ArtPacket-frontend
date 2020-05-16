@@ -141,7 +141,7 @@ const VCarouselItem = {
         },
         changeOpened(){
             this.descriptionOpened = !this.descriptionOpened;
-            console.log('descriptionOpened', this.descriptionOpened);
+            // console.log('descriptionOpened', this.descriptionOpened);
         }
     },
     computed:{
@@ -169,11 +169,11 @@ const VCarousel = {
     }),
     //@wheel="scrollHandle"
     template: `<div class="v-carousel">
-        <div class="v-carousel-inner" @wheel="scrollHandle">
+        <div class="v-carousel-inner" @wheel="scrollHandle" ref="inner">
             <v-carousel-item v-for="card in artSetsData" :card = "card" :key="card.id" />
         </div> 
         <div class = "v-carousel-nav">
-            <div v-for="ni in artSetsData.length" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
+            <div v-for="ni in pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
         </div>
     </div>`,
     methods: {
@@ -185,12 +185,25 @@ const VCarousel = {
         setActivePage(navitemId){
             this.activePage = navitemId - 1;
             let inner = document.querySelector('.v-carousel-inner');
-            inner.scrollLeft = this.activePage * 300;
+            let innerDom = this.$refs.inner;
+            inner.scrollLeft = this.activePage * innerDom.scrollWidth / this.pageCount;
         },
         scrollHandle(event){
             event.preventDefault();
             event.currentTarget.scrollLeft += event.deltaY;
-            this.activePage = Math.ceil(event.currentTarget.scrollLeft / 300);
+            let pageWidth = (event.currentTarget.scrollWidth - event.currentTarget.clientWidth) / this.pageCount;
+
+            let currPage = Math.ceil(event.currentTarget.scrollLeft / pageWidth) - 1;
+            if (currPage < 0) {
+                this.activePage = 0
+            } else if (currPage >= this.pageCount) {
+                this.activePage = this.pageCount -1;
+
+            } else {
+                this.activePage = currPage;
+            }
+
+
         }
 
     },
