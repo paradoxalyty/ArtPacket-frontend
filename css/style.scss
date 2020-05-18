@@ -199,7 +199,7 @@ h3{
         
         text-align: center;
         padding: 3%;
-        
+
         border: 1px solid #B0B0B0;
         padding: 27px;
         border-radius: 2px;
@@ -355,7 +355,7 @@ h3{
         top: 0;
         width: 100px;
         height: 100%;
-        
+
         font-size: 45px;
         text-align: center;
         // background-color: green;
@@ -376,11 +376,11 @@ h3{
         top: 0;
         width: 100px;
         height: 100%;
-        
+
         font-size: 45px;
         text-align: center;
         // background-color: blue;
-        
+
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -523,9 +523,9 @@ h3{
             flex-basis: 15%;
             &__sizename{
                 width: 45px;
-                height: 45px; 
+                height: 45px;
                 border: 1px solid #282F32;
-                border-radius: 3px;  
+                border-radius: 3px;
                 font-weight: 500;
                 font-size: 18px;
                 line-height: 45px;
@@ -576,7 +576,7 @@ h3{
             line-height: 80px;
         }
 
-        &:before{
+        &:not(:last-child):before{
             position: absolute;
             top: 40px;
             left: 38px;
@@ -606,10 +606,6 @@ h3{
     &-item4:after{
         background: #3E5777;
         content: "4";
-    }
-
-    &-item4:before{
-        background: #FFF;
     }
 
 
@@ -971,4 +967,139 @@ h3{
     }
 }
 
-@media screen and (max-width: 576px){}
+@media screen and (max-width: 576px) {
+
+    .heading3 {
+        margin-bottom: 30px;
+        font-size: 22px;
+        line-height: 33px;
+    }
+
+
+    .howItWorks {
+    }
+
+
+    .questions {
+        width: 100%;
+        padding: 25px 20px 30px 20px;
+
+        &-left,
+        &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-question {
+            position: relative;
+            padding-left: 34px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 18px;
+
+            &:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                content: "";
+            }
+        }
+
+        .question-1:before,
+        .question-5:before {
+            background: #F98832;
+        }
+
+        .question-2:before {
+            background: #04B0B7;
+        }
+
+        .question-3:before {
+            background: #0B779D;
+        }
+
+        .question-4:before {
+            background: #3E5777;
+        }
+
+        .question-6 {
+            padding-left: 0;
+            text-align: center;
+        }
+
+        &-answer {
+            padding-left: 34px;
+            margin-bottom: 30px;
+            font-size: 11px;
+            line-height: 20px;
+        }
+
+        &-btn {
+            align-self: center;
+            width: 200px;
+            height: 40px;
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 21px;
+        }
+    }
+
+
+    .delivery {
+        padding: 25px 15px;
+
+        &-item {
+            padding: 0 0 0 67px;
+            margin-bottom: 30px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+
+            &:before {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        &-map {
+            display: none;
+        }
+    }
+
+
+    .footer {
+        justify-content: center;
+        text-align: center;
+        padding: 35px 50px;
+        font-size: 14px;
+        line-height: 21px;
+
+        &-logo {
+            flex-basis: 100%;
+            padding: 5px;
+
+            img {
+                margin-bottom: 50px;
+            }
+        }
+
+        &-contacts {
+            flex-basis: 100%;
+            padding: 0;
+
+            p {
+                padding: 5px;
+            }
+
+        }
+    }
+}
+
+
+@media screen and (max-width: 321px) {
+}
