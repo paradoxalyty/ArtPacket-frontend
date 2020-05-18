@@ -9,11 +9,17 @@ const VCarouselImages = {
         activeImage: 0,
     }),
     template: `<div class="v-carousel-image">
-                <div :class="prevBtnClass()" @click="prevImage">&lt;</div>
+                <div :class="prevBtnClass()" @click="prevImage">
+                    <div class="v-carousel-image__left__top"></div>
+                    <div class="v-carousel-image__left__bottom"></div>
+                </div>
                 <div class="v-carousel-image__img">
                     <img :src="images[this.activeImage]" alt="Set picture" class="v-carousel-image__img__pic">
                 </div>
-                <div :class="nextBtnClass()" @click="nextImage">&gt;</div>
+                <div :class="nextBtnClass()" @click="nextImage">
+                    <div class="v-carousel-image__right__top"></div>
+                    <div class="v-carousel-image__right__bottom"></div>
+                </div>
             </div>`,
     methods: {
         prevImage(){
@@ -69,7 +75,7 @@ const VCarouselSizes = {
         vCarouselSizesBlock
     },
     data: () =>({
-        activeSize: "S",
+        activeSize: "M",
     }),
     template: `<div class="v-carousel-sizes">
                 <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activeSize" @setActiveSize = "setActiveSize" :key="size.sizename" />
@@ -82,6 +88,14 @@ const VCarouselSizes = {
 
 };
 
+const VCarouselDescriptionListItem = {
+    name: 'v-carousel-description-list-item',
+    props: ['description'],
+    template: `<li class="v-carousel-description-list-item">
+                <span>{{description}}</span>
+            </li>`
+};
+
 /**
  * Компонент блока "карточка товара"
  */
@@ -90,22 +104,52 @@ const VCarouselItem = {
     props: ['card'],
     components: {
         VCarouselImages,
-        VCarouselSizes
+        VCarouselSizes,
+        VCarouselDescriptionListItem
     },
+    data: () =>({
+        descriptionOpened: false,
+    }),
     template: `<div class="v-carousel-item">
-        <v-carousel-images :images="card.picture" />
-        <div class="v-carousel-item__name">{{card.name}}</div>
-        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
-        <div class="v-carousel-item__sizeTitle">Размер</div>
-        <form>
-        <v-carousel-sizes :sizes="card.sizes" />
-        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
-        </form>
-    </div>`,
+                    <v-carousel-images :images="card.picture" />
+                    <div class="v-carousel-item__descBlock">
+                        <div class="v-carousel-item__nameBlock">
+                            <div class="v-carousel-item__name">{{card.name}}</div>
+                            <div :class="this.detailsClass" @click="changeOpened">
+                                <div class="v-carousel-item__name__details__left"></div>
+                                <div class="v-carousel-item__name__details__right"></div>
+                            </div>
+                        </div>
+                        <div :class="this.descriptionClass">
+                            <div class="v-carousel-description-title">Описание:</div>
+                            <ul class="v-carousel-description-list">
+                                <v-carousel-description-list-item v-for="description in card.descriptions" :description="description" />
+                            </ul>
+                        </div>
+                    
+                        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
+                        <div class="v-carousel-item__sizeTitle">Размер</div>
+                        <v-carousel-sizes :sizes="card.sizes" />
+                    </div>
+                        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
+                    
+                </div>`,
     methods:{
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
+        },
+        changeOpened(){
+            this.descriptionOpened = !this.descriptionOpened;
+            // console.log('descriptionOpened', this.descriptionOpened);
+        }
+    },
+    computed:{
+        descriptionClass(){
+            return this.descriptionOpened ? "v-carousel-description" : "v-carousel-description v-carousel-description__hidden";
+        },
+        detailsClass(){
+            return this.descriptionOpened ? "v-carousel-item__name__details" : "v-carousel-item__name__details v-carousel-item__name__details__rotated";
         }
     }
 
@@ -123,46 +167,43 @@ const VCarousel = {
     data: () =>({
         activePage: 0,
     }),
+    //@wheel="scrollHandle"
     template: `<div class="v-carousel">
-        <div class="v-carousel-inner" @wheel="scrollHandle">
-            <v-carousel-item v-for="card in pageItems" :card = "card" :key="card.id" />
-        </div>
-        <div :class="btnLeftClass()" @click="scrollLeft"><p>&lt;</p></div>
-        <div :class="btnRightClass()" @click = "scrollRight"><p>&gt;</p></div>
+        <div class="v-carousel-inner" @wheel="scrollHandle" ref="inner">
+            <v-carousel-item v-for="card in artSetsData" :card = "card" :key="card.id" />
+        </div> 
         <div class = "v-carousel-nav">
-            <div v-for="ni in this.pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
+            <div v-for="ni in pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
         </div>
     </div>`,
     methods: {
-        scrollLeft(){
-            if (this.activePage > 0){
-                this.activePage -= 1;
-            }
-        },
-        scrollRight(){
-            if (this.activePage <  this.pageCount - 1){
-               this.activePage += 1;
-            }
-        },
+       
         navItemClass(itemId){
             return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
         },
-        btnLeftClass(){
-            return this.activePage > 0 ? "v-carousel-btn__left v-carousel-btn__left__active": "v-carousel-btn__left";
-        },
-        btnRightClass(){
-            return this.activePage < (this.pageCount - 1) ? "v-carousel-btn__right v-carousel-btn__right__active": "v-carousel-btn__right";
-        },
+       
         setActivePage(navitemId){
             this.activePage = navitemId - 1;
+            let inner = document.querySelector('.v-carousel-inner');
+            let innerDom = this.$refs.inner;
+            inner.scrollLeft = this.activePage * innerDom.scrollWidth / this.pageCount;
         },
         scrollHandle(event){
             event.preventDefault();
-            if (event.deltaY > 0){
-                this.scrollRight();
-            } else if (event.deltaY < 0){
-                this.scrollLeft();
+            event.currentTarget.scrollLeft += event.deltaY;
+            let pageWidth = (event.currentTarget.scrollWidth - event.currentTarget.clientWidth) / this.pageCount;
+
+            let currPage = Math.ceil(event.currentTarget.scrollLeft / pageWidth) - 1;
+            if (currPage < 0) {
+                this.activePage = 0
+            } else if (currPage >= this.pageCount) {
+                this.activePage = this.pageCount -1;
+
+            } else {
+                this.activePage = currPage;
             }
+
+
         }
 
     },
@@ -188,8 +229,9 @@ const app = new Vue({
         artSetsData: [
             {
                 id: 1,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                picture: ["./img/artSet_img.png", "./img/artSets-logo.png", "./img/artSet_img.png"],
                 name: "Название",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1100,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
@@ -198,6 +240,7 @@ const app = new Vue({
                 id: 2,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название 2",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1200,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
@@ -206,6 +249,7 @@ const app = new Vue({
                 id: 3,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название 3",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1300,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
@@ -214,7 +258,26 @@ const app = new Vue({
                 id: 4,
                 picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
                 name: "Название 4",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1400,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 5,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 5",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
+                price: 1500,
+                sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
+                currentSize: 30
+            },
+            {
+                id: 6,
+                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
+                name: "Название 6",
+                descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
+                price: 1600,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
                 currentSize: 30
             }
