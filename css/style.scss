@@ -556,6 +556,7 @@ h3{
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 50px 126px 50px 132px;
+    counter-reset: element; /* инициализация счетчика */
 
     &-item{
         position: relative;
@@ -574,6 +575,9 @@ h3{
             font-size: 36px;
             text-align: center;
             line-height: 80px;
+            content: counter(element); /* значеие счетчика в качестве контента */
+            counter-increment: element; /* увеличение значение счетчика на 1 */
+            background: #F98832;
         }
 
         &:not(:last-child):before{
@@ -590,22 +594,18 @@ h3{
 
     &-item1:after{
         background: #F98832;
-        content: "1";
     }
 
     &-item2:after{
         background: #04B0B7;
-        content: "2";
     }
 
     &-item3:after{
         background: #0B779D;
-        content: "3";
     }
 
     &-item4:after{
         background: #3E5777;
-        content: "4";
     }
 
 
