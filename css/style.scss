@@ -147,6 +147,7 @@ h3{
     height: fit-content;
     padding-top: 52px;
     // padding: 51px 69px;
+  
     &-caption{
         width: 100%;
         display: flex;
@@ -170,6 +171,7 @@ h3{
             padding: 8px 0;
         }
     }
+
     &-carouselBlock{
         width: 100%;
         // min-height: 800px;
@@ -549,7 +551,6 @@ h3{
     }
 }
 
-
 .howItWorks{
     display: flex;
     flex-direction: column;
@@ -658,9 +659,6 @@ h3{
         flex-basis: 48%;
     }
 
-    // &-item{
-    // }
-
     &-question{
         margin-bottom: 30px;
         font-family: 'MPLUS-Bleck', sans-serif;
@@ -720,8 +718,6 @@ h3{
     justify-content: space-between;
     align-items: flex-end;
     padding-right: 90px;
-
-    // &-map{}
 
     &-iframe{
         width: 436px;
@@ -946,7 +942,7 @@ h3{
             width: 100%;
         }
     }
-
+  
     .questions{
 
         &-left,
