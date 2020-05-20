@@ -142,6 +142,9 @@ h3{
         }
     }
 }
+.hidden{
+    display: none;
+}
 .artSets{
     // min-height: 894px;
     height: fit-content;
@@ -177,35 +180,25 @@ h3{
     }
 }
 .v-carousel{
-    padding: 50px 100px 100px;
     &-inner{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-between;
         position: relative;
-        padding: 50px 0px 0px;
+        padding: 50px 100px 100px;
         transition: 3s;
-        overflow-y: auto;
-        &::-webkit-scrollbar{
-            display: none;
-        }
     }
     &-item{
         // flex-basis: calc((100% - 300px) / 3);
-        flex-basis: 33%;
-        min-width: 339px;
+        width: 30%;
         flex-grow: 0;
-        
         text-align: center;
         padding: 3%;
         
         border: 1px solid #B0B0B0;
         padding: 27px;
         border-radius: 2px;
-        &:not(:last-of-type){
-            margin-right: 97px;
-        }
         // margin-right: 5%;
 
         // &:not(:last-of-type){
@@ -256,7 +249,7 @@ h3{
                     border-radius: 5px;
                     transform: rotate(-45deg);
                     position: absolute;
-                    top: 10px;
+                    top: 11px;
                     left: 15px;
                 }
                 &:hover{
@@ -363,8 +356,27 @@ h3{
         flex-direction: column;
         justify-content: center;
         color: white;
-        &__active:hover{
-            color: #3E5777;
+        &__up{
+            width: 3.25px;
+            height: 32.45px;
+            transform: rotate(45deg);
+            background: #C4C4C4;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+        }
+        &__down{
+            width: 3.25px;
+            height: 32.45px;
+            transform: rotate(-45deg);
+            background: #C4C4C4;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            top: calc(50% + 6px);
+        }
+        &__active:hover > div{
+            background: #F98832;
         }
         &>p{
             cursor: default;
@@ -385,8 +397,27 @@ h3{
         flex-direction: column;
         justify-content: center;
         color: white;
-        &__active:hover{
-            color: #3E5777;
+        &__up{
+            width: 3.25px;
+            height: 32.45px;
+            transform: rotate(-45deg);
+            background: #C4C4C4;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+        }
+        &__down{
+            width: 3.25px;
+            height: 32.45px;
+            transform: rotate(45deg);
+            background: #C4C4C4;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            top: calc(50% + 6px);
+        }
+        &__active:hover > div{
+            background: #F98832;
         }
         &>p{
             cursor: default;
@@ -412,6 +443,9 @@ h3{
             }
             &__active{
                 background-color: #F98832;
+            }
+            &__hidden{
+                display: none;
             }
         }
     }
@@ -945,9 +979,16 @@ h3{
     .v-carousel{
         &-inner{
             padding: 10%;
+            flex-direction: column;
+            overflow-y: auto;
+            height: 1840px;
         }
         &-item{
             width: 100%;
+            border: none;
+        }
+        &-description{
+            position: relative;
         }
     }
 

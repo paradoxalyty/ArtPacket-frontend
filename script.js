@@ -141,7 +141,7 @@ const VCarouselItem = {
         },
         changeOpened(){
             this.descriptionOpened = !this.descriptionOpened;
-            // console.log('descriptionOpened', this.descriptionOpened);
+            console.log('descriptionOpened', this.descriptionOpened);
         }
     },
     computed:{
@@ -167,43 +167,60 @@ const VCarousel = {
     data: () =>({
         activePage: 0,
     }),
-    //@wheel="scrollHandle"
+    // @wheel="scrollHandle"
     template: `<div class="v-carousel">
-        <div class="v-carousel-inner" @wheel="scrollHandle" ref="inner">
-            <v-carousel-item v-for="card in artSetsData" :card = "card" :key="card.id" />
-        </div> 
+        <div class="v-carousel-inner">
+            <v-carousel-item v-for="card in pageItems" :card = "card" :key="card.id" />
+        </div>
+        <div :class="btnLeftClass()" @click="scrollLeft">
+            <div class="v-carousel-btn__left__up"></div>
+            <div class="v-carousel-btn__left__down"></div>
+        </div>
+        <div :class="btnRightClass()" @click = "scrollRight">
+            <div class="v-carousel-btn__right__up"></div>
+            <div class="v-carousel-btn__right__down"></div>
+        </div>
         <div class = "v-carousel-nav">
-            <div v-for="ni in pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
+            <div v-for="ni in this.pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
         </div>
     </div>`,
     methods: {
-       
-        navItemClass(itemId){
-            return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
+        // innerClass(){
+        //     return this.isDesctop ? "v-carousel-inner" : "v-carousel-inner__mobile";
+        // }
+        scrollLeft(){
+            if (this.activePage > 0){
+                this.activePage -= 1;
+            }
         },
-       
+        scrollRight(){
+            if (this.activePage <  this.pageCount - 1){
+               this.activePage += 1;
+            }
+        },
+        navItemClass(itemId){
+            if (this.isDesctop){
+                return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
+            } else {
+                return "hidden";
+            }
+        },
+        btnLeftClass(){
+            return this.isDesctop ? this.activePage > 0 ? "v-carousel-btn__left v-carousel-btn__left__active": "v-carousel-btn__left" : "hidden";
+        },
+        btnRightClass(){
+            return this.isDesctop ? this.activePage < (this.pageCount - 1) ? "v-carousel-btn__right v-carousel-btn__right__active": "v-carousel-btn__right" : "hidden";
+        },
         setActivePage(navitemId){
             this.activePage = navitemId - 1;
-            let inner = document.querySelector('.v-carousel-inner');
-            let innerDom = this.$refs.inner;
-            inner.scrollLeft = this.activePage * innerDom.scrollWidth / this.pageCount;
         },
         scrollHandle(event){
             event.preventDefault();
-            event.currentTarget.scrollLeft += event.deltaY;
-            let pageWidth = (event.currentTarget.scrollWidth - event.currentTarget.clientWidth) / this.pageCount;
-
-            let currPage = Math.ceil(event.currentTarget.scrollLeft / pageWidth) - 1;
-            if (currPage < 0) {
-                this.activePage = 0
-            } else if (currPage >= this.pageCount) {
-                this.activePage = this.pageCount -1;
-
-            } else {
-                this.activePage = currPage;
+            if (event.deltaY > 0){
+                this.scrollRight();
+            } else if (event.deltaY < 0){
+                this.scrollLeft();
             }
-
-
         }
 
     },
@@ -212,7 +229,8 @@ const VCarousel = {
             return screen.width > 767 ? true : false
         },
         pageItems(){
-            let itemsCount = this.isDesctop ? 3 : 1;
+            let itemsCount = this.isDesctop ? 3 : this.artSetsData.length;
+            // let itemsCount = 3;
             return this.artSetsData.slice(this.activePage * itemsCount, this.activePage * itemsCount + itemsCount)
         },
         pageCount(){
