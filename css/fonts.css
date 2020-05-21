@@ -20,8 +20,15 @@
 }
 
 @font-face {
+    font-family: "MPLUS-ExtraBold";
+    font-style: normal;
+    font-weight: 800;
+    src: url("../fonts/MPLUSRounded1c-ExtraBold.ttf");
+}
+
+@font-face {
     font-family: "MPLUS-Black";
     font-style: normal;
     font-weight: 900;
-    src: url("../fonts/MPLUSRounded1c-ExtraBold.ttf");
+    src: url("../fonts/MPLUSRounded1c-Black.ttf");
 }
