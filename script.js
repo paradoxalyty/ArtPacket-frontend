@@ -296,3 +296,38 @@ const app = new Vue({
     //     }
     // }
 });
+
+
+
+
+window.onload = window.onresize = setStyle;
+
+function setStyle() {
+    let elements = [...document.querySelectorAll('.howItWorks-text')];
+
+    if (window.matchMedia("(min-width: 576px)").matches) {
+        elements.forEach(item => {
+            item.style.display = "block";
+        });
+    } else {
+        elements.forEach(item => {
+            item.style.display = "none";
+        });
+    }
+}
+
+document.querySelectorAll(".howItWorks-btn").forEach(function (element) {
+    element.addEventListener("click", function () {
+
+            let display = this.parentNode.querySelector("p").style.display;
+
+            if (display === "block") {
+                this.parentNode.querySelector("p").style.display = "none";
+                element.removeAttribute('open');
+            } else {
+                this.parentNode.querySelector("p").style.display = "block";
+                element.setAttribute('open', 'open');
+            }
+        },
+        false)
+});
