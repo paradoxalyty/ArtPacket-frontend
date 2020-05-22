@@ -5,7 +5,7 @@
 const VCarouselImages = {
     name: 'v-carousel-images',
     props: ['images'],
-    data: () => ({
+    data: () =>({
         activeImage: 0,
     }),
     template: `<div class="v-carousel-image">
@@ -22,20 +22,20 @@ const VCarouselImages = {
                 </div>
             </div>`,
     methods: {
-        prevImage() {
-            if (this.activeImage > 0) {
-                this.activeImage -= 1;
+        prevImage(){
+            if (this.activeImage > 0){
+                this.activeImage -=1;
             }
         },
-        nextImage() {
-            if (this.activeImage < this.images.length - 1) {
-                this.activeImage += 1;
+        nextImage(){
+            if (this.activeImage < this.images.length - 1){
+                this.activeImage +=1;
             }
         },
-        prevBtnClass() {
+        prevBtnClass(){
             return this.activeImage > 0 ? "v-carousel-image__left v-carousel-image__left__active" : "v-carousel-image__left";
         },
-        nextBtnClass() {
+        nextBtnClass(){
             return this.activeImage < this.images.length - 1 ? "v-carousel-image__right v-carousel-image__right__active" : "v-carousel-image__right";
         }
     }
@@ -56,11 +56,11 @@ const vCarouselSizesBlock = {
                 </div>
             </div>`,
     methods: {
-        sizeBlockClass() {
+        sizeBlockClass(){
             return this.size.sizename === this.activeSize ? "v-carousel-sizes-block__sizename v-carousel-sizes-block__sizename__active" : "v-carousel-sizes-block__sizename";
         },
-        setActiveSize() {
-            this.$emit('setActiveSize', this.size.sizename);
+        setActiveSize(){
+            this.$emit('setActiveSize',  this.size.sizename);
         }
     },
 };
@@ -74,14 +74,14 @@ const VCarouselSizes = {
     components: {
         vCarouselSizesBlock
     },
-    data: () => ({
+    data: () =>({
         activeSize: "M",
     }),
     template: `<div class="v-carousel-sizes">
                 <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activeSize" @setActiveSize = "setActiveSize" :key="size.sizename" />
             </div>`,
-    methods: {
-        setActiveSize(sizeName) {
+    methods:{
+        setActiveSize(sizeName){
             this.activeSize = sizeName;
         }
     }
@@ -107,7 +107,7 @@ const VCarouselItem = {
         VCarouselSizes,
         VCarouselDescriptionListItem
     },
-    data: () => ({
+    data: () =>({
         descriptionOpened: false,
     }),
     template: `<div class="v-carousel-item">
@@ -134,21 +134,21 @@ const VCarouselItem = {
                         <input type="button" class="v-carousel-item__button" value="Заказать"></input>
                     
                 </div>`,
-    methods: {
+    methods:{
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
         },
-        changeOpened() {
+        changeOpened(){
             this.descriptionOpened = !this.descriptionOpened;
-            // console.log('descriptionOpened', this.descriptionOpened);
+            console.log('descriptionOpened', this.descriptionOpened);
         }
     },
-    computed: {
-        descriptionClass() {
+    computed:{
+        descriptionClass(){
             return this.descriptionOpened ? "v-carousel-description" : "v-carousel-description v-carousel-description__hidden";
         },
-        detailsClass() {
+        detailsClass(){
             return this.descriptionOpened ? "v-carousel-item__name__details" : "v-carousel-item__name__details v-carousel-item__name__details__rotated";
         }
     }
@@ -160,62 +160,80 @@ const VCarouselItem = {
  */
 const VCarousel = {
     name: 'v-carousel',
-    props: ['artSetsData'],
+    props:['artSetsData'],
     components: {
         VCarouselItem,
     },
-    data: () => ({
+    data: () =>({
         activePage: 0,
     }),
-    //@wheel="scrollHandle"
+    // @wheel="scrollHandle"
     template: `<div class="v-carousel">
-        <div class="v-carousel-inner" @wheel="scrollHandle" ref="inner">
-            <v-carousel-item v-for="card in artSetsData" :card = "card" :key="card.id" />
-        </div> 
+        <div class="v-carousel-inner">
+            <v-carousel-item v-for="card in pageItems" :card = "card" :key="card.id" />
+        </div>
+        <div :class="btnLeftClass()" @click="scrollLeft">
+            <div class="v-carousel-btn__left__up"></div>
+            <div class="v-carousel-btn__left__down"></div>
+        </div>
+        <div :class="btnRightClass()" @click = "scrollRight">
+            <div class="v-carousel-btn__right__up"></div>
+            <div class="v-carousel-btn__right__down"></div>
+        </div>
         <div class = "v-carousel-nav">
-            <div v-for="ni in pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
+            <div v-for="ni in this.pageCount" :class="navItemClass(ni)" @click="setActivePage(ni)"></div>
         </div>
     </div>`,
     methods: {
-
-        navItemClass(itemId) {
-            return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
-        },
-
-        setActivePage(navitemId) {
-            this.activePage = navitemId - 1;
-            let inner = document.querySelector('.v-carousel-inner');
-            let innerDom = this.$refs.inner;
-            inner.scrollLeft = this.activePage * innerDom.scrollWidth / this.pageCount;
-        },
-        scrollHandle(event) {
-            event.preventDefault();
-            event.currentTarget.scrollLeft += event.deltaY;
-            let pageWidth = (event.currentTarget.scrollWidth - event.currentTarget.clientWidth) / this.pageCount;
-
-            let currPage = Math.ceil(event.currentTarget.scrollLeft / pageWidth) - 1;
-            if (currPage < 0) {
-                this.activePage = 0
-            } else if (currPage >= this.pageCount) {
-                this.activePage = this.pageCount - 1;
-
-            } else {
-                this.activePage = currPage;
+        // innerClass(){
+        //     return this.isDesctop ? "v-carousel-inner" : "v-carousel-inner__mobile";
+        // }
+        scrollLeft(){
+            if (this.activePage > 0){
+                this.activePage -= 1;
             }
-
-
+        },
+        scrollRight(){
+            if (this.activePage <  this.pageCount - 1){
+                this.activePage += 1;
+            }
+        },
+        navItemClass(itemId){
+            if (this.isDesctop){
+                return this.activePage === (itemId - 1) ? "v-carousel-nav-item v-carousel-nav-item__active" : "v-carousel-nav-item";
+            } else {
+                return "hidden";
+            }
+        },
+        btnLeftClass(){
+            return this.isDesctop ? this.activePage > 0 ? "v-carousel-btn__left v-carousel-btn__left__active": "v-carousel-btn__left" : "hidden";
+        },
+        btnRightClass(){
+            return this.isDesctop ? this.activePage < (this.pageCount - 1) ? "v-carousel-btn__right v-carousel-btn__right__active": "v-carousel-btn__right" : "hidden";
+        },
+        setActivePage(navitemId){
+            this.activePage = navitemId - 1;
+        },
+        scrollHandle(event){
+            event.preventDefault();
+            if (event.deltaY > 0){
+                this.scrollRight();
+            } else if (event.deltaY < 0){
+                this.scrollLeft();
+            }
         }
 
     },
     computed: {
-        isDesctop() {
+        isDesctop(){
             return screen.width > 767 ? true : false
         },
-        pageItems() {
-            let itemsCount = this.isDesctop ? 3 : 1;
+        pageItems(){
+            let itemsCount = this.isDesctop ? 3 : this.artSetsData.length;
+            // let itemsCount = 3;
             return this.artSetsData.slice(this.activePage * itemsCount, this.activePage * itemsCount + itemsCount)
         },
-        pageCount() {
+        pageCount(){
             return this.isDesctop ? Math.ceil(this.artSetsData.length / 3) : this.artSetsData.length;
 
         },
@@ -225,7 +243,7 @@ const VCarousel = {
 
 const app = new Vue({
     el: '#app',
-    data: {
+    data:{
         artSetsData: [
             {
                 id: 1,
@@ -284,17 +302,18 @@ const app = new Vue({
         ]
 
     },
-    components: {
+    components:{
         VCarousel,
     },
-    methods: {},
+    methods:{
+
+    },
     // computed:{
     //     isDesctop(){
     //         return screen.width > 767 ? true : false;
     //     }
     // }
 });
-
 
 window.onload = window.onresize = setStyle;
 
