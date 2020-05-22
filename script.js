@@ -315,7 +315,6 @@ const app = new Vue({
     // }
 });
 
-
 window.onload = window.onresize = setStyle;
 
 function setStyle() {
