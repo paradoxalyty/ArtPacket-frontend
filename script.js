@@ -317,6 +317,8 @@ window.onload = window.onresize = setStyle;
 
 function setStyle() {
     let elements = [...document.querySelectorAll('.text')];
+    let buttons = [...document.querySelectorAll('.check-btn')];
+    let lastItems = [...document.querySelectorAll('.lastItem')];
 
     if (window.matchMedia("(min-width: 576px)").matches) {
         elements.forEach(item => {
@@ -325,6 +327,12 @@ function setStyle() {
     } else {
         elements.forEach(item => {
             item.style.display = "none";
+        });
+        buttons.forEach(button => {
+            button.removeAttribute('open');
+        });
+        lastItems.forEach(lastItem => {
+            lastItem.removeAttribute('open');
         });
     }
 }
@@ -336,8 +344,10 @@ document.querySelectorAll(".check-btn").forEach(function (element) {
 
             if (display === "block") {
                 this.parentNode.querySelector("p").style.display = "none";
+                element.removeAttribute('open');
             } else {
                 this.parentNode.querySelector("p").style.display = "block";
+                element.setAttribute('open', 'open');
             }
 
             let lastItem = this.parentNode.classList.contains("lastItem");
