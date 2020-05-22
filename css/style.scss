@@ -1158,6 +1158,7 @@ h3 {
       display: none;
       font-size: 11px;
       line-height: 20px;
+      letter-spacing: -0.2px;
     }
   }
 
@@ -1191,6 +1192,7 @@ h3 {
       font-weight: 500;
       font-size: 14px;
       line-height: 21px;
+      letter-spacing: 0.5px;
 
       &:after {
         position: absolute;
@@ -1232,6 +1234,7 @@ h3 {
       font-weight: 400;
       font-size: 11px;
       line-height: 20px;
+      letter-spacing: -0.2px;
     }
 
     &-btn {
