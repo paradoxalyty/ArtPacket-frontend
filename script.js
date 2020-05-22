@@ -314,3 +314,44 @@ const app = new Vue({
     //     }
     // }
 });
+
+
+window.onload = window.onresize = setStyle;
+
+function setStyle() {
+    let elements = [...document.querySelectorAll('.text')];
+
+    if (window.matchMedia("(min-width: 576px)").matches) {
+        elements.forEach(item => {
+            item.style.display = "block";
+        });
+    } else {
+        elements.forEach(item => {
+            item.style.display = "none";
+        });
+    }
+}
+
+document.querySelectorAll(".check-btn").forEach(function (element) {
+    element.addEventListener("click", function () {
+
+            let display = this.parentNode.querySelector("p").style.display;
+
+            if (display === "block") {
+                this.parentNode.querySelector("p").style.display = "none";
+            } else {
+                this.parentNode.querySelector("p").style.display = "block";
+            }
+
+            let lastItem = this.parentNode.classList.contains("lastItem");
+
+            if (lastItem && !element.parentElement.hasAttribute('open')) {
+                element.parentElement.setAttribute('open', 'open');
+            } else if (lastItem && element.parentElement.hasAttribute('open')) {
+                element.parentElement.removeAttribute('open');
+            }
+
+
+        },
+        false)
+});
