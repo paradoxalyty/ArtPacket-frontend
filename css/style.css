@@ -1,5 +1,6 @@
 @charset "UTF-8";
-@import "fonts.css";
+@import url(c:\mama\GeekBrains\frontend-developer 2019\traineeship\MK\css\fonts.css);
+
 * {
   margin: 0;
   padding: 0;
@@ -236,11 +237,15 @@ h3 {
   justify-content: space-between;
   position: relative;
   padding: 50px 100px 100px;
+  -webkit-transition: 3s;
   transition: 3s;
 }
+
 .v-carousel-item {
   width: 30%;
-  flex-grow: 0;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
   text-align: center;
   padding: 3%;
   border: 1px solid #B0B0B0;
@@ -390,8 +395,8 @@ h3 {
 .v-carousel-btn__left__up {
   width: 3.25px;
   height: 32.45px;
-  transform: rotate(45deg);
-  background: #C4C4C4;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);  background: #C4C4C4;
   border-radius: 2px;
   position: absolute;
   left: 50%;
@@ -399,8 +404,8 @@ h3 {
 .v-carousel-btn__left__down {
   width: 3.25px;
   height: 32.45px;
-  transform: rotate(-45deg);
-  background: #C4C4C4;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);  background: #C4C4C4;
   border-radius: 2px;
   position: absolute;
   left: 50%;
@@ -428,8 +433,8 @@ h3 {
 .v-carousel-btn__right__up {
   width: 3.25px;
   height: 32.45px;
-  transform: rotate(-45deg);
-  background: #C4C4C4;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);  background: #C4C4C4;
   border-radius: 2px;
   position: absolute;
   left: 50%;
@@ -437,8 +442,8 @@ h3 {
 .v-carousel-btn__right__down {
   width: 3.25px;
   height: 32.45px;
-  transform: rotate(45deg);
-  background: #C4C4C4;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);  background: #C4C4C4;
   border-radius: 2px;
   position: absolute;
   left: 50%;
@@ -706,7 +711,16 @@ h3 {
   background: #282F32;
   content: "";
 }
-.questions-question {
+.questions .wrap:before {
+  position: absolute;
+  top: 14px;
+  right: 9px;
+  display: none;
+  width: 6px;
+  height: 100%;
+  background: #282F32;
+  content: "";
+}.questions-question {
   margin-bottom: 30px;
   font-family: "MPLUS-Bleck", sans-serif;
   font-style: normal;
@@ -868,11 +882,10 @@ h3 {
   .howItWorks {
     padding: 60px;
   }
-
   .questions {
     padding: 60px;
   }
-
+  
   .delivery {
     padding: 0;
   }
@@ -937,7 +950,10 @@ h3 {
 
   .v-carousel-inner {
     padding: 10%;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     overflow-y: auto;
     height: 1840px;
   }
@@ -1127,5 +1143,175 @@ h3 {
     padding: 5px;
   }
 }
-
+@media screen and (max-width: 576px) {
+  .heading3 {
+    margin-bottom: 30px;
+    font-size: 22px;
+    line-height: 33px;
+  }
+  .horizontal:before {
+    display: block;
+  }
+  .check-btn {
+    display: block;
+  }
+  .howItWorks {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .howItWorks-item {
+    padding: 0 35px;
+  }
+  .howItWorks-item:after {
+    top: -2px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 11px;
+  }
+  .howItWorks-item:before {
+    top: 20px;
+    left: 10px;
+    width: 4px;
+  }
+  .howItWorks-item:last-child[open="open"]:before {
+    content: "";
+    height: calc(100% - 20px);
+  }
+  .howItWorks-topic {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .howItWorks-text {
+    display: none;
+    font-size: 11px;
+    line-height: 20px;
+    letter-spacing: -0.2px;
+  }
+  .questions {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .questions .wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .questions .wrap:not(.wrap5):before {
+    display: block;
+  }
+  .questions .wrap5 > .questions-answer {
+    margin-bottom: 0;
+  }
+  .questions .wrap5[open="open"]:before {
+    display: block;
+    height: calc(100% - 14px);
+  }
+  .questions-question {
+    position: relative;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.5px;
+  }
+  .questions-question:after {
+    position: absolute;
+    top: 0;
+    left: -35px;
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    content: "";
+  }
+  .questions .question-1:after,
+  .questions .question-5:after {
+    background: #F98832;
+  }
+  .questions .question-2:after {
+    background: #04B0B7;
+  }
+  .questions .question-3:after {
+    background: #0B779D;
+  }
+  .questions .question-4:after {
+    background: #3E5777;
+  }
+  .questions .question-6 {
+    padding-left: 0;
+    text-align: center;
+  }
+  .questions-answer {
+    display: none;
+    margin-bottom: 30px;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 20px;
+    letter-spacing: -0.2px;
+  }
+  .questions-btn {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .delivery {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .delivery-info {
+    padding: 0;
+  }
+  .delivery-item {
+    padding: 0 0 0 67px;
+    margin-bottom: 30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .delivery-item:before {
+    width: 50px;
+    height: 50px;
+  }
+  .delivery-map {
+    display: none;
+  }
+  .footer {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    text-align: center;
+    padding: 35px 50px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .footer-logo {
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    padding: 5px;
+  }
+  .footer-logo img {
+    margin-bottom: 50px;
+  }
+  .footer-contacts {
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    padding: 0;
+  }
+  .footer-contacts p {
+    padding: 5px;
+  }
+}
 /*# sourceMappingURL=style.css.map */
