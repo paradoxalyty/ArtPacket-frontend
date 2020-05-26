@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import "fonts.css";
 
 * {
@@ -953,6 +954,127 @@ h3 {
 
   &-rus:before {
     background: url("../img/delivery-rus.png") #04B0B7 center no-repeat;
+  }
+}
+
+
+/*contactUs*/
+.contactUs {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(211,211,211, 0.8);
+
+  &-form {
+    max-width: 320px;
+    margin: 0 auto;
+    background: #FFF;
+  }
+
+  &-heading {
+    width: 100%;
+    margin-bottom: 20px;
+    font-family: 'MPLUS-Medium', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #F5FDFC;
+    background: #3E5777;
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px 24px 30px;
+  }
+
+  label {
+    margin-bottom: 15px;
+    padding-left: 14px;
+    font-family: 'MPLUS-Medium', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #000000;
+  }
+
+  .form-items {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    background: #F5FDFC;
+    font-family: 'MPLUS-Regular', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 1px;
+    color: #282F32;
+
+    &:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #8F8F8F;
+    }
+
+    &::-moz-placeholder {
+      color: #8F8F8F;
+    }
+
+    /* Firefox 19+ */
+    &:-moz-placeholder {
+      color: #8F8F8F;
+    }
+
+    /* Firefox 18- */
+    &:-ms-input-placeholder {
+      color: #8F8F8F;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .required {
+    margin-bottom: 28px;
+    font-family: 'MPLUS-Regular', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 20px;
+    color: #000000;
+  }
+
+  &-btn {
+    align-self: center;
+    width: 219px;
+    height: 36px;
+    border: 4px solid #F98832;
+    border-radius: 10px;
+    background: #FFF;
+    font-family: 'MPLUS-Regular', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #111111;
   }
 }
 
