@@ -965,6 +965,7 @@ h3 {
   right: 0;
   bottom: 0;
   left: 0;
+  display: none;
   background: rgba(211, 211, 211, 0.8);
 
   &-form {
@@ -1094,6 +1095,7 @@ h3 {
     text-align: center;
     letter-spacing: 1px;
     color: #111111;
+    cursor: pointer;
   }
 }
 
