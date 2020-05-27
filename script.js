@@ -368,17 +368,17 @@ window.onload = function () {
 }
 
 
-/*FORM-START*/
+/*FORM----------------------------------------------START*/
 
 let hiddenForm = document.querySelector('.contactUs');
 
 function formClose(event) {
-    event.preventDefault();
+    // event.preventDefault();
     hiddenForm.style.display = "none";
 }
 
-let closeBtn = document.querySelector(".close-btn");
-closeBtn.addEventListener('click', formClose, false);
+let closeButton = document.querySelector(".close-btn");
+closeButton.addEventListener('click', formClose, false);
 
 function formOpen() {
     hiddenForm.style.display = "block";
@@ -389,4 +389,16 @@ openButtons.forEach(element => {
     element.addEventListener('click', formOpen, false);
 })
 
-/*FORM-END*/
+
+/*FORM-VALIDATION*/
+
+
+let submitButton = hiddenForm.querySelector('.contactUs-btn');
+
+hiddenForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+}, false);
+
+
+
+/*FORM---------------------------------------------------END*/

@@ -971,7 +971,7 @@ h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  display: none;
+  //display: none;
   background: rgba(40, 47, 50, 0.3);
 
   &-form {
@@ -1035,7 +1035,7 @@ h3 {
     color: #000000;
   }
 
-  .form-items {
+  .form-item {
     width: 100%;
     padding: 10px 14px;
     border: none;
@@ -1048,10 +1048,7 @@ h3 {
     line-height: 27px;
     letter-spacing: 1px;
     color: #282F32;
-
-    &:not(:last-of-type) {
-      margin-bottom: 15px;
-    }
+    margin-bottom: 15px;
 
     &::-webkit-input-placeholder {
       color: #8F8F8F;
@@ -1076,7 +1073,8 @@ h3 {
     }
   }
 
-  textarea {
+  textarea.form-item {
+    margin-bottom: 0;
     resize: none;
   }
 
@@ -1105,7 +1103,28 @@ h3 {
     text-align: center;
     letter-spacing: 1px;
     color: #111111;
-    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:active {
+      color: #F5FDFC;
+      background: #F98832;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .error {
+    border: 0.5px solid #B61111;
+  }
+
+  .required-error {
+    color: #B61111;
   }
 }
 
@@ -1503,7 +1522,7 @@ h3 {
       letter-spacing: 0.5px;
     }
 
-    .form-items {
+    .form-item {
       font-size: 14px;
       line-height: 21px;
     }

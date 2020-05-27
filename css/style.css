@@ -690,7 +690,7 @@ h3 {
   margin-bottom: 50px;
 }
 .questions-left, .questions-right {
-  flex-basis: 48%;
+  max-width: 48%;
 }
 .questions .wrap {
   position: relative;
@@ -699,12 +699,15 @@ h3 {
 .questions .wrap:before {
   position: absolute;
   top: 14px;
-  right: 9px;
+  right: 11.5px;
   display: none;
-  width: 6px;
+  width: 2px;
   height: 100%;
   background: #282F32;
   content: "";
+}
+.questions .wrap6 {
+  padding: 0 35px;
 }
 .questions-question {
   margin-bottom: 30px;
@@ -812,6 +815,151 @@ h3 {
   background: url("../img/delivery-rus.png") #04B0B7 center no-repeat;
 }
 
+/*contactUs------------------START*/
+.contactUs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(40, 47, 50, 0.3);
+}
+.contactUs-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 522px;
+  background: #FFF;
+}
+.contactUs-form .close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 41px;
+  height: 41px;
+  padding: 0 6px 20px 0;
+  border: none;
+  outline: none;
+  font-family: "MPLUS-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  text-align: right;
+  color: #F5FDFC;
+  background: #3E5777;
+  cursor: pointer;
+}
+.contactUs-heading {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  font-family: "MPLUS-ExtraBold", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 42px;
+  text-align: center;
+  color: #F5FDFC;
+  background: #3E5777;
+}
+.contactUs-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px 24px 30px;
+}
+.contactUs label {
+  margin-bottom: 7px;
+  padding-left: 22px;
+  font-family: "MPLUS-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 1px;
+  color: #000000;
+}
+.contactUs .form-item {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #F5FDFC;
+  font-family: "MPLUS-Regular", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 1px;
+  color: #282F32;
+  margin-bottom: 15px;
+  /* Firefox 19+ */
+  /* Firefox 18- */
+}
+.contactUs .form-item::-webkit-input-placeholder {
+  color: #8F8F8F;
+}
+.contactUs .form-item::-moz-placeholder {
+  color: #8F8F8F;
+}
+.contactUs .form-item:-moz-placeholder {
+  color: #8F8F8F;
+}
+.contactUs .form-item:-ms-input-placeholder {
+  color: #8F8F8F;
+}
+.contactUs .form-item:focus {
+  outline: none;
+}
+.contactUs textarea.form-item {
+  margin-bottom: 0;
+  resize: none;
+}
+.contactUs .required {
+  margin-bottom: 40px;
+  font-family: "MPLUS-Regular", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  color: #000000;
+}
+.contactUs-btn {
+  align-self: center;
+  width: 206px;
+  height: 49px;
+  border: 4px solid #F98832;
+  border-radius: 10px;
+  background: #FFF;
+  font-family: "MPLUS-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #111111;
+  -webkit-tap-highlight-color: transparent;
+}
+.contactUs-btn:hover {
+  cursor: pointer;
+}
+.contactUs-btn:active {
+  color: #F5FDFC;
+  background: #F98832;
+}
+.contactUs-btn:focus {
+  outline: none;
+}
+.contactUs .error {
+  border: 0.5px solid #B61111;
+}
+.contactUs .required-error {
+  color: #B61111;
+}
+
+/*contactUs------------------END*/
 .footer {
   display: flex;
   justify-content: space-between;
@@ -950,7 +1098,7 @@ h3 {
   }
 
   .questions-left, .questions-right {
-    flex-basis: 100%;
+    max-width: 100%;
   }
 
   .footer-info {
@@ -993,8 +1141,8 @@ h3 {
   }
   .howItWorks-item:before {
     top: 20px;
-    left: 10px;
-    width: 4px;
+    left: 12px;
+    width: 2px;
   }
   .howItWorks-item:last-child[open=open]:before {
     content: "";
@@ -1062,7 +1210,7 @@ h3 {
     background: #3E5777;
   }
   .questions .question-6 {
-    padding-left: 0;
+    margin-top: 30px;
     text-align: center;
   }
   .questions-answer {
@@ -1074,10 +1222,10 @@ h3 {
     letter-spacing: -0.2px;
   }
   .questions-btn {
-    align-self: center;
+    display: block;
     width: 200px;
     height: 40px;
-    margin-bottom: 0;
+    margin: 0 auto;
     font-size: 14px;
     line-height: 21px;
   }
@@ -1103,6 +1251,48 @@ h3 {
   }
   .delivery-map {
     display: none;
+  }
+
+  .contactUs-form {
+    width: 320px;
+  }
+  .contactUs-form .close-btn {
+    width: 24px;
+    height: 24px;
+    padding: 0 5px 3px 0;
+    font-size: 12px;
+  }
+  .contactUs-heading {
+    padding: 6px 0;
+    font-family: "MPLUS-Medium", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+  }
+  .contactUs label {
+    padding-left: 14px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+  }
+  .contactUs .form-item {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .contactUs .required {
+    margin-bottom: 28px;
+    font-size: 11px;
+    line-height: 20px;
+  }
+  .contactUs-btn {
+    width: 219px;
+    height: 36px;
+    font-family: "MPLUS-Regular", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 21px;
   }
 
   .footer {
