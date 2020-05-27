@@ -822,9 +822,9 @@ h3 {
     &:before {
       position: absolute;
       top: 14px;
-      right: 9px;
+      right: 11.5px;
       display: none;
-      width: 6px;
+      width: 2px;
       height: 100%;
       background: #282F32;
       content: "";
@@ -1338,8 +1338,8 @@ h3 {
 
       &:before {
         top: 20px;
-        left: 10px;
-        width: 4px;
+        left: 12px;
+        width: 2px;
       }
 
       &:last-child[open="open"]:before {
