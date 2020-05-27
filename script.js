@@ -313,52 +313,92 @@ const app = new Vue({
     // }
 });
 
-window.onload = window.onresize = setStyle;
 
-function setStyle() {
-    let elements = [...document.querySelectorAll('.text')];
-    let buttons = [...document.querySelectorAll('.check-btn')];
-    let lastItems = [...document.querySelectorAll('.lastItem')];
+window.onload = function () {
 
-    if (window.matchMedia("(min-width: 576px)").matches) {
-        elements.forEach(item => {
-            item.style.display = "block";
-        });
-    } else {
-        elements.forEach(item => {
-            item.style.display = "none";
-        });
-        buttons.forEach(button => {
-            button.removeAttribute('open');
-        });
-        lastItems.forEach(lastItem => {
-            lastItem.removeAttribute('open');
-        });
+    window.onresize = setStyle;
+
+    function setStyle() {
+        let elements = [...document.querySelectorAll('.text')];
+        let buttons = [...document.querySelectorAll('.check-btn')];
+        let lastItems = [...document.querySelectorAll('.lastItem')];
+
+        if (window.matchMedia("(min-width: 576px)").matches) {
+            elements.forEach(item => {
+                item.style.display = "block";
+            });
+        } else {
+            elements.forEach(item => {
+                item.style.display = "none";
+            });
+            buttons.forEach(button => {
+                button.removeAttribute('open');
+            });
+            lastItems.forEach(lastItem => {
+                lastItem.removeAttribute('open');
+            });
+        }
     }
+
+    document.querySelectorAll(".check-btn").forEach(function (element) {
+        element.addEventListener("click", function () {
+
+                let display = this.parentNode.querySelector("p").style.display;
+
+                if (display === "block") {
+                    this.parentNode.querySelector("p").style.display = "none";
+                    element.removeAttribute('open');
+                } else {
+                    this.parentNode.querySelector("p").style.display = "block";
+                    element.setAttribute('open', 'open');
+                }
+
+                let lastItem = this.parentNode.classList.contains("lastItem");
+
+                if (lastItem && !element.parentElement.hasAttribute('open')) {
+                    element.parentElement.setAttribute('open', 'open');
+                } else if (lastItem && element.parentElement.hasAttribute('open')) {
+                    element.parentElement.removeAttribute('open');
+                }
+
+
+            },
+            false)
+    });
 }
 
-document.querySelectorAll(".check-btn").forEach(function (element) {
-    element.addEventListener("click", function () {
 
-            let display = this.parentNode.querySelector("p").style.display;
+/*FORM----------------------------------------------START*/
 
-            if (display === "block") {
-                this.parentNode.querySelector("p").style.display = "none";
-                element.removeAttribute('open');
-            } else {
-                this.parentNode.querySelector("p").style.display = "block";
-                element.setAttribute('open', 'open');
-            }
+let hiddenForm = document.querySelector('.contactUs');
 
-            let lastItem = this.parentNode.classList.contains("lastItem");
+function formClose(event) {
+    // event.preventDefault();
+    hiddenForm.style.display = "none";
+}
 
-            if (lastItem && !element.parentElement.hasAttribute('open')) {
-                element.parentElement.setAttribute('open', 'open');
-            } else if (lastItem && element.parentElement.hasAttribute('open')) {
-                element.parentElement.removeAttribute('open');
-            }
+let closeButton = document.querySelector(".close-btn");
+closeButton.addEventListener('click', formClose, false);
+
+function formOpen() {
+    hiddenForm.style.display = "block";
+}
+
+let openButtons = document.querySelectorAll(".open-contactUs");
+openButtons.forEach(element => {
+    element.addEventListener('click', formOpen, false);
+})
 
 
-        },
-        false)
-});
+/*FORM-VALIDATION*/
+
+
+let submitButton = hiddenForm.querySelector('.contactUs-btn');
+
+hiddenForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+}, false);
+
+
+
+/*FORM---------------------------------------------------END*/
