@@ -917,7 +917,7 @@ h3 {
   margin-bottom: 0;
   resize: none;
 }
-.contactUs .required {
+.contactUs .required-text {
   margin-bottom: 40px;
   font-family: "MPLUS-Regular", sans-serif;
   font-style: normal;
@@ -938,7 +938,6 @@ h3 {
   font-weight: 500;
   font-size: 20px;
   line-height: 30px;
-  text-align: center;
   letter-spacing: 1px;
   color: #111111;
   -webkit-tap-highlight-color: transparent;
@@ -956,7 +955,14 @@ h3 {
 .contactUs .error {
   border: 0.5px solid #B61111;
 }
-.contactUs .required-error {
+.contactUs .required-red {
+  color: #B61111;
+}
+.contactUs .btn-empty-field {
+  border: 4px solid #B0B0B0;
+}
+.contactUs .btn-error {
+  border: 4px solid #B0B0B0;
   color: #B61111;
 }
 
