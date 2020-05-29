@@ -1,4 +1,124 @@
 'use strict'
+
+/**
+ * 
+ */
+const OrderDialog = {
+    name: 'order-dialog',
+    props: ['name', 'price', 'selectedsize', 'sizes'],
+    data: () => ({
+        delivery: false,
+        orderSize: "M",
+        orderName: "Ваше имя",
+        orderEmail: "pochta@mail.ru",
+        orderPhone: "+7 (___) ___ __ __",
+        orderAddress: "Адрес доставки",
+        orderNotAccepted: true,
+        phoneRegExp: /^\+*\d{1}\(?\d{3}\)?\d{3}-*\d{2}-*\d{2}$/,
+    }),
+    template: `<div class="orderDialogBck">
+                    <div v-if="orderNotAccepted" class="orderDialog">
+                        
+                        <div class="contactUs-heading">
+                        Оформление заказа
+                        </div>
+                        <button class="close-btn" @click="closeOrderDialog">X</button>
+                            <div class="orderDialog-form">
+                            <div class="v-carousel-item__name">
+                            {{name}}
+                            </div>
+                            <div class="v-carousel-item__price">
+                            {{this.prettify(price)}} руб.
+                            </div>
+                            <div class="v-carousel-item__sizeTitle">
+                            Размер: {{this.orderSize}}
+                                <div>
+                                    Изменить размер:
+                                    <select v-model="orderSize" class="orderDialog-select">
+                                        <option v-for="size in sizes" v-bind:value="size.sizename">
+                                            {{ size.sizename }} ({{ size.size }})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="orderDialog-data">
+                                <div class="v-carousel-item__sizeTitle">Ваши контактные данные:</div>
+                                <label for="name" class="orderDialog-data-label">ФИО</label>
+                                <input class="orderDialog-data-item" type="text" name="name" id="name" v-model="orderName" :placeholder="orderName">
+
+                                <label for="phone" class="orderDialog-data-label">Телефон*</label>
+                                <input required :class="phoneClass()" type="tel" name="phone" id="phone" v-model="orderPhone" :placeholder="orderPhone">
+
+                                <label for="email" class="orderDialog-data-label">Почта</label>
+                                <input class="orderDialog-data-item" type="email" name="email" id="email" v-model="orderEmail" :placeholder="orderEmail">
+                            </div>
+                            <div class="orderDelivery">
+                                
+                                <input type="checkbox" class="orderDelivery-checkbox" v-model="delivery" name="deliveryFlag" id="deliveryFlag">
+                                <label for="deliveryFlag" class="orderDelivery-checkbox-label">Включить доставку</label>
+                                <div v-if="delivery">
+                                    <label for="deliveryAddress" class="orderDialog-data-label">Адрес доставки:</label>
+                                    <textarea class="orderDialog-data-item orderDialog-data-area" name="deliveryAddress" id="deliveryAddress" rows="4"
+                                            v-model="orderAddress" :placeholder="orderAddress"></textarea>
+                                </div>
+                            </div>
+                            <div class="orderDialog__required">* - обязательное поле заполнения</div>
+                            <button type="submit" :class="orderBtnClass()" :disabled="!allowConfirm" @click="confirmOrder">Подтвердить заказ</button>
+                            
+                        </div>
+                    </div>
+                    <div v-else class="orderDialog__accepted">
+                       <div class="v-carousel-item__name">Ваш заказ принят</div>
+                       <button class="contactUs-btn" @click="closeOrderDialog">ОК</button>
+                    </div>
+                </div>`,
+    mounted(){
+        this.orderSize = this.selectedsize;
+    },
+    methods: {
+        isValidPhone(myPhone) { 
+            return this.phoneRegExp.test(myPhone.replace(/\s/g, '')); 
+        },
+        closeOrderDialog(){
+            this.$emit('closeOrderDialog')
+        },
+        prettify(num) {
+            var n = num.toString();
+            return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
+        },
+        orderBtnClass(){
+            return this.allowConfirm ? "contactUs-btn" : "contactUs-btn disabled-btn";
+        },
+        phoneClass(){
+            return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item disabled-phone";
+        },
+        confirmOrder(){
+            
+            console.log('Ваш заказ:');
+            console.log(this.name);
+            console.log(this.prettify(this.price) + " руб.");
+            console.log(this.orderSize);
+            console.log('Ваши данные:');
+            console.log(this.orderName);
+            console.log(this.orderPhone);
+            console.log(this.orderEmail);
+            if (delivery) {
+                console.log('Доставка по адресу:');
+                console.log(this.orderAddress);
+            }
+            this.orderNotAccepted = false
+        }
+    },
+    computed: {
+        allowConfirm(){
+            if (this.isValidPhone(this.orderPhone)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } 
+}
 /**
  * Компонент карусели картинок набора
  */
@@ -70,19 +190,20 @@ const vCarouselSizesBlock = {
  */
 const VCarouselSizes = {
     name: 'v-carousel-sizes',
-    props: ['sizes'],
+    props: ['sizes', 'activesize'],
     components: {
         vCarouselSizesBlock
     },
     data: () => ({
-        activeSize: "M",
+        // activeSize: "M",
     }),
     template: `<div class="v-carousel-sizes">
-                <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activeSize" @setActiveSize = "setActiveSize" :key="size.sizename" />
+                <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activesize" @setActiveSize = "setActiveSize" :key="size.sizename" />
             </div>`,
     methods: {
         setActiveSize(sizeName) {
-            this.activeSize = sizeName;
+            // this.activeSize = sizeName;
+            this.$emit('changesize', sizeName);
         }
     }
 
@@ -105,10 +226,13 @@ const VCarouselItem = {
     components: {
         VCarouselImages,
         VCarouselSizes,
-        VCarouselDescriptionListItem
+        VCarouselDescriptionListItem,
+        OrderDialog
     },
     data: () => ({
         descriptionOpened: false,
+        orderDialogOpened: false,
+        activeSize: "M",
     }),
     template: `<div class="v-carousel-item">
                     <v-carousel-images :images="card.picture" />
@@ -129,19 +253,28 @@ const VCarouselItem = {
                     
                         <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
                         <div class="v-carousel-item__sizeTitle">Размер</div>
-                        <v-carousel-sizes :sizes="card.sizes" />
+                        <v-carousel-sizes :sizes="card.sizes" :activesize="activeSize" @changesize="changeSize"/>
                     </div>
-                        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
-                    
+                        <input type="button" class="v-carousel-item__button" value="Заказать" @click="openOrderDialog"></input>
+                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="card.price" :selectedsize="activeSize" :sizes="card.sizes" @closeOrderDialog="closeOrderDialog" />
                 </div>`,
     methods: {
+        changeSize(newSize){
+            this.activeSize = newSize;
+        },
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
         },
         changeOpened() {
             this.descriptionOpened = !this.descriptionOpened;
-            console.log('descriptionOpened', this.descriptionOpened);
+            // console.log('descriptionOpened', this.descriptionOpened);
+        },
+        closeOrderDialog() {
+            this.orderDialogOpened = false;
+        },
+        openOrderDialog(){
+            this.orderDialogOpened = true;
         }
     },
     computed: {
