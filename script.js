@@ -501,20 +501,30 @@ window.onload = function () {
 }
 
 
-/*FORM----------------------------------------------START*/
+/*FORM-----------------------------------------------------------------------------------------------------------START*/
 
-let hiddenForm = document.querySelector('.contactUs');
 
+let hiddenFormContainer = document.querySelector('.contactUs');
+let hiddenForm = document.querySelector('.contactUs-form');
+
+/**
+ * Закрытие формы
+ * */
 function formClose(event) {
     // event.preventDefault();
-    hiddenForm.style.display = "none";
+    hiddenFormContainer.style.display = "none";
+    hiddenForm.classList.remove('opened');
 }
 
 let closeButton = document.querySelector(".close-btn");
 closeButton.addEventListener('click', formClose, false);
 
+/**
+ * Открытие формы
+ * */
 function formOpen() {
-    hiddenForm.style.display = "block";
+    hiddenFormContainer.style.display = "block";
+    hiddenForm.classList.add('opened');
 }
 
 let openButtons = document.querySelectorAll(".open-contactUs");
@@ -523,15 +533,171 @@ openButtons.forEach(element => {
 })
 
 
-/*FORM-VALIDATION*/
+/*__________________FORM-VALIDATION-----------------------------------------------------------------------------------*/
 
 
-let submitButton = hiddenForm.querySelector('.contactUs-btn');
+let submitButton = hiddenFormContainer.querySelector('.contactUs-btn');
+let requiredText = hiddenFormContainer.querySelector('.required-text');
+let phoneField = hiddenFormContainer.querySelector('#phone');
+let emailField = hiddenFormContainer.querySelector('#email');
 
+let requiredItems = [phoneField, emailField];
+
+/**
+ * Обработчик события конкретно на те поля ввода, которые нужно валидировать
+ * */
+requiredItems.forEach(formField => {
+    formField.addEventListener('blur', function () {
+        let checkPhone = isValidPhone(phoneField.value);
+        let checkEmail = isValidEmail(emailField.value);
+
+        clearErrors();
+
+        if (phoneField.value.length === 0) {
+            addErrorEmptyField();
+        } else if (!checkPhone) {
+            addErrorWrongPhone();
+        }
+
+        if (!checkEmail) {
+            addErrorWrongMail();
+        }
+    })
+});
+
+/**
+ * Валидация поля ввода телефонного номера
+ * */
+function isValidPhone(phone) {
+    return /^\+7\s\([3489][0-9]{2}\)\s[0-9]{3}\s[0-9]{2}\s[0-9]{2}$/.test(phone);
+    // return /^((8|\+7)[-\(]?[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/.test(phone); // источник https://habr.com/ru/post/110731/
+}
+
+/**
+ * Валидация поля ввода электронной почты
+ * */
+function isValidEmail(mail) {
+    // источник https://web.izjum.com/regexp-email-url-phone
+    return /^(?! )$|^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,4}$/.test(mail);
+}
+
+/**
+ * Предварительная очистка классов предупреждения об ошибке со всех элементов
+ * */
+function clearErrors() {
+    phoneField.classList.remove('error');
+    emailField.classList.remove('error');
+    requiredText.classList.remove('required-red');
+    submitButton.classList.remove('btn-empty-field');
+    submitButton.classList.remove('btn-error');
+    changeBtnValue("Отправить");
+}
+
+/**
+ * Добавление классов предупреждения об ошибке при пустом поле ввода телефонного номера
+ * */
+function addErrorEmptyField() {
+    phoneField.classList.add('error');
+    requiredText.classList.add('required-red');
+    submitButton.classList.add('btn-empty-field');
+}
+
+/**
+ * Добавление классов предупреждения об ошибке при неправильном вводе телефонного номера
+ * */
+function addErrorWrongPhone() {
+    phoneField.classList.add('error');
+    submitButton.classList.add('btn-error');
+    changeBtnValue("Ошибка");
+}
+
+/**
+ * Добавление классов предупреждения об ошибке при неправильном вводе электронной почты
+ * */
+function addErrorWrongMail() {
+    emailField.classList.add('error');
+    submitButton.classList.add('btn-error');
+    changeBtnValue("Ошибка");
+}
+
+/**
+ * Изменение названия кнопки - submitButton
+ * */
+function changeBtnValue(buttonValue) {
+    if (buttonValue) {
+        submitButton.value = buttonValue;
+    }
+}
+
+
+/*___________________________маска для ввода телефонного номера_______________________________________________________*/
+
+
+// https://javascript.ru/forum/dom-window/63870-kak-sdelat-masku-telefona-v-input-c-7-___-bez-jquery-4.html
+
+/**
+ * маска для ввода телефонного номера
+ * */
+window.addEventListener("DOMContentLoaded", function () {
+    function setCursorPosition(pos, elem) {
+        // elem.focus();
+        if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
+        /* else if (elem.createTextRange) {
+             var range = elem.createTextRange();
+             range.collapse(true);
+             range.moveEnd("character", pos);
+             range.moveStart("character", pos);
+             range.select()
+         }*/
+    }
+
+    function mask(event) {
+        if (this.selectionStart < 3) event.preventDefault();
+
+        let matrix = "+7 (___) ___ __ __",
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, "");
+
+        if (def.length >= val.length) val = def;
+
+        this.value = matrix.replace(/[_\d]/g, function (a) {
+            return i < val.length ? val.charAt(i++) : a
+        });
+
+        i = this.value.indexOf("_");
+
+        if (event.key === "Backspace") i = this.value.lastIndexOf(val.substr(-1)) + 1;
+
+        if (i !== -1) {
+            i < 5 && (i = 3);
+            this.value = this.value.slice(0, i);
+        }
+
+        if (event.type === "blur") {
+            if (this.value.length < 5) this.value = ""
+        } else setCursorPosition(this.value.length, this);
+
+    }
+
+    let input = document.querySelector("#phone");
+    input.addEventListener("input", mask, false);
+    input.addEventListener("focus", mask, false);
+    input.addEventListener("blur", mask, false);
+    input.addEventListener("keydown", mask, false);
+});
+
+
+/*___________________________маска для ввода телефонного номера_______________________________________________________*/
+
+
+/**
+ * Отмена стандартного поведения формы
+ * */
 hiddenForm.addEventListener('submit', function (event) {
     event.preventDefault();
+
 }, false);
 
 
-
-/*FORM---------------------------------------------------END*/
+/*FORM-------------------------------------------------------------------------------------------------------------END*/
