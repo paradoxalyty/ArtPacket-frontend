@@ -19,11 +19,12 @@ const OrderDialog = {
     template: `<div class="orderDialogBck">
                     <div v-if="orderNotAccepted" class="orderDialog">
                         
-                        <div class="contactUs-heading">
+                        <div class="orderDialog-heading">
                         Оформление заказа
-                        </div>
+                        
                         <button class="close-btn" @click="closeOrderDialog">X</button>
-                            <div class="orderDialog-form">
+                        </div>
+                        <div class="orderDialog-form">
                             <div class="v-carousel-item__name">
                             {{name}}
                             </div>
@@ -92,7 +93,7 @@ const OrderDialog = {
             return this.allowConfirm ? "contactUs-btn" : "contactUs-btn disabled-btn";
         },
         phoneClass(){
-            return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item disabled-phone";
+            return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item error";
         },
         confirmOrder(){
             
