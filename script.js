@@ -43,14 +43,14 @@ const OrderDialog = {
                             </div>
                             <div class="orderDialog-data">
                                 <div class="v-carousel-item__sizeTitle">Ваши контактные данные:</div>
-                                <label for="name" class="orderDialog-data-label">ФИО</label>
-                                <input class="orderDialog-data-item" type="text" name="name" id="ordername" v-model="orderName" :placeholder="orderName">
+                                <label for="ordername" class="orderDialog-data-label">ФИО</label>
+                                <input class="orderDialog-data-item" type="text" name="ordername" id="ordername" v-model="orderName" :placeholder="orderName">
 
-                                <label for="phone" class="orderDialog-data-label">Телефон*</label>
-                                <input required :class="phoneClass()" type="tel" name="phone" id="orderphone" v-model="orderPhone" :placeholder="orderPhone">
+                                <label for="orderphone" class="orderDialog-data-label">Телефон*</label>
+                                <input required :class="phoneClass()" type="tel" name="orderphone" id="orderphone" v-model="orderPhone" :placeholder="orderPhone">
 
-                                <label for="email" class="orderDialog-data-label">Почта</label>
-                                <input class="orderDialog-data-item" type="email" name="email" id="orderemail" v-model="orderEmail" :placeholder="orderEmail">
+                                <label for="orderemail" class="orderDialog-data-label">Почта</label>
+                                <input class="orderDialog-data-item" type="email" name="orderemail" id="orderemail" v-model="orderEmail" :placeholder="orderEmail">
                             </div>
                             <div class="orderDelivery">
                                 
