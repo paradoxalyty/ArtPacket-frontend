@@ -1185,14 +1185,22 @@ h3 {
   width: 100%;
   height: 100%;
   display: none;
+  padding-top: 5%;
   background: rgba(40, 47, 50, 0.3);
+  overflow: auto;
 
-  &-form {
+  /*&-form {
     position: absolute;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    width: 522px;
+    background: #FFF;*/
+
+  &-form {
+    position: relative;
+    margin: 0 auto;
     width: 522px;
     background: #FFF;
 
@@ -1346,6 +1354,56 @@ h3 {
   .btn-error {
     border: 4px solid #B0B0B0;
     color: #B61111;
+  }
+
+
+  /*contactUS-confirm-------------*/
+
+
+  .confirm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 522px;
+    height: 240px;
+    padding-top: 90px;
+    background: rgba(245, 253, 252, 0.95);
+    border-radius: 2px;
+
+    &-close-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 72px;
+      height: 72px;
+      padding: 26px;
+      border: none;
+      outline: none;
+      font-family: 'MPLUS-Medium', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: center;
+      color: #282F32;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    &-text {
+      padding: 0 58px;
+      font-family: 'MPLUS-Regular', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 28px;
+      line-height: 42px;
+      text-align: center;
+      letter-spacing: 1px;
+      color: #282F32;
+    }
   }
 }
 
@@ -1826,6 +1884,30 @@ h3 {
       font-weight: normal;
       font-size: 14px;
       line-height: 21px;
+    }
+
+
+    /*contactUS-confirm-------------*/
+
+
+    .confirm {
+      width: 240px;
+      height: 192px;
+      padding-top: 55px;
+
+      &-close-btn {
+        width: 42px;
+        height: 42px;
+        padding: 14px;
+        font-size: 14px;
+        line-height: 14px;
+      }
+
+      &-text {
+        padding: 0 28px;
+        font-size: 18px;
+        line-height: 27px;
+      }
     }
   }
 
