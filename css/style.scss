@@ -187,7 +187,7 @@ h3 {
     color: #FFFFFF;
     letter-spacing: 1px;
     margin-bottom: 50px;
-    text-align: justify;
+    text-align: left;
   }
 
   &-btn {
@@ -723,14 +723,15 @@ h3 {
   overflow: auto;
 }
 .orderDialog{
-  margin-top: 10%;
+  margin-top: 5%;
+  margin-bottom: 10%;
   margin-left: calc((100% - 522px) / 2);
   width: 522px;
   z-index: 3;
   background-color: #ffffff;
   position: relative;
   &-form{
-    padding: 5% 5% 10% 5%;
+    padding: 23px 32px;
     & .contactUs-btn{
       padding: 0px 20px;
       width: fit-content;
@@ -747,13 +748,13 @@ h3 {
     padding: 6px 0;
     font-family: 'MPLUS-Medium', sans-serif;
     font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
+    color: #F5FDFC;
+    // letter-spacing: 0.5px;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 42px;
     position: relative;
     width: 100%;
-    margin-bottom: 20px;
     text-align: center;
     color: #F5FDFC;
     background: #3E5777;
@@ -780,36 +781,40 @@ h3 {
   &-data{
     display: flex;
     flex-direction: column;
-    padding: 0 30px 24px 30px;
-
+    padding: 0;
+    text-align: left;
      &-label {
-      margin-bottom: 7px;
-      padding-left: 22px;
-      font-family: 'MPLUS-Regular', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 18px;
-      line-height: 45px;
-      letter-spacing: 1px;
-      color: #282F32;
-      margin-bottom: 25px;
-      
+        margin-bottom: 25px;
+        padding-left: 20px;
+        font-family: 'MPLUS-Regular', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 1px;
+        color: #000000;
+        margin-bottom: 15px;
+        text-align: left;
+        &__order{
+            margin-bottom: 2px;
+        }
     }
   
     &-item {
-      width: 100%;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 10px;
-      background: #F5FDFC;
-      font-family: 'MPLUS-Regular', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 18px;
-      line-height: 27px;
-      letter-spacing: 1px;
-      color: #282F32;
-      margin-bottom: 15px;
+        width: 100%;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        background: #F5FDFC;
+        font-family: 'MPLUS-Regular', sans-serif;
+        
+        letter-spacing: 1px;
+        color: #282F32;
+        margin-bottom: 20px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 27px;;
   
       &::-webkit-input-placeholder {
         color: #8F8F8F;
@@ -857,13 +862,39 @@ h3 {
     }
   }
   &__accepted{
-    margin-top: 40%;
+    margin-top: calc((100vh - 240px) / 2);
     margin-left: calc((100% - 522px) / 2);
     width: 522px;
+    height: 240px;
+    border-radius: 2px;
     z-index: 3;
-    background-color: #ffffff;
+    background: rgba(245, 253, 252, 0.95);
     position: relative;
     padding: 50px;
+    &__text{
+        font-family: 'MPLUS-Regular', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 28px;
+        line-height: 42px;
+        text-align: center;
+        letter-spacing: 1px;
+        color: #282F32;
+        margin-top: 17px;
+    }
+    &__close{
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 26px;
+        right: 26px;
+        color: #282F32;
+        border: none;
+        background-image: url("../img/close-2.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
   }
   &__required{
@@ -874,6 +905,8 @@ h3 {
     font-size: 14px;
     line-height: 21px;
     color: #000000;
+    text-align: left;
+    padding-left: 18px;
   }
   &-select{
     padding: 10px 14px;
@@ -887,6 +920,44 @@ h3 {
     letter-spacing: 1px;
     color: #282F32;
   }
+  &-order{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      &-img{
+            flex-basis: 30%;
+            flex-grow: 0;
+            &__first{
+                width: 143px;
+                height: 153px;
+                border-radius: 15px;
+                margin-right: 23px;
+            }
+        }
+      &-details{
+            flex-grow: 1;
+      }
+      &-table{
+        width: 100%;
+        text-align: left;
+        font-family: 'MPLUS-Regular', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: 1px;
+        color: #282F32;
+        & > tr > td {
+            padding: 14px 0;
+            margin: 0;
+            &:nth-of-type(even){
+                font-weight: 600;
+                text-align: right;
+            }
+        }
+        
+      }
+    }
 }
 
 
@@ -1185,22 +1256,14 @@ h3 {
   width: 100%;
   height: 100%;
   display: none;
-  padding-top: 5%;
   background: rgba(40, 47, 50, 0.3);
-  overflow: auto;
 
-  /*&-form {
+  &-form {
     position: absolute;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: 522px;
-    background: #FFF;*/
-
-  &-form {
-    position: relative;
-    margin: 0 auto;
     width: 522px;
     background: #FFF;
 
@@ -1354,56 +1417,6 @@ h3 {
   .btn-error {
     border: 4px solid #B0B0B0;
     color: #B61111;
-  }
-
-
-  /*contactUS-confirm-------------*/
-
-
-  .confirm {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    display: none;
-    width: 522px;
-    height: 240px;
-    padding-top: 90px;
-    background: rgba(245, 253, 252, 0.95);
-    border-radius: 2px;
-
-    &-close-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 72px;
-      height: 72px;
-      padding: 26px;
-      border: none;
-      outline: none;
-      font-family: 'MPLUS-Medium', sans-serif;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 20px;
-      text-align: center;
-      color: #282F32;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    &-text {
-      padding: 0 58px;
-      font-family: 'MPLUS-Regular', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 28px;
-      line-height: 42px;
-      text-align: center;
-      letter-spacing: 1px;
-      color: #282F32;
-    }
   }
 }
 
@@ -1884,30 +1897,6 @@ h3 {
       font-weight: normal;
       font-size: 14px;
       line-height: 21px;
-    }
-
-
-    /*contactUS-confirm-------------*/
-
-
-    .confirm {
-      width: 240px;
-      height: 192px;
-      padding-top: 55px;
-
-      &-close-btn {
-        width: 42px;
-        height: 42px;
-        padding: 14px;
-        font-size: 14px;
-        line-height: 14px;
-      }
-
-      &-text {
-        padding: 0 28px;
-        font-size: 18px;
-        line-height: 27px;
-      }
     }
   }
 
