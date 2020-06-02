@@ -1,4 +1,127 @@
 'use strict'
+
+/**
+ *
+ */
+const OrderDialog = {
+    name: 'order-dialog',
+    props: ['name', 'price', 'selectedsize', 'sizes'],
+    data: () => ({
+        delivery: false,
+        orderSize: "M",
+        orderName: "Ваше имя",
+        orderEmail: "pochta@mail.ru",
+        orderPhone: "+7 (___) ___ __ __",
+        orderAddress: "Адрес доставки",
+        orderNotAccepted: true,
+        phoneRegExp: /^\+*\d{1}\(?\d{3}\)?\d{3}-*\d{2}-*\d{2}$/,
+    }),
+    template: `<div class="orderDialogBck">
+                    <div v-if="orderNotAccepted" class="orderDialog">
+                        
+                        <div class="orderDialog-heading">
+                        Оформление заказа
+                        
+                        <button class="close-btn" @click="closeOrderDialog">X</button>
+                        </div>
+                        <div class="orderDialog-form">
+                            <div class="v-carousel-item__name">
+                            {{name}}
+                            </div>
+                            <div class="v-carousel-item__price">
+                            {{this.prettify(price)}} руб.
+                            </div>
+                            <div class="v-carousel-item__sizeTitle">
+                            Размер: {{this.orderSize}}
+                                <div>
+                                    Изменить размер:
+                                    <select v-model="orderSize" class="orderDialog-select">
+                                        <option v-for="size in sizes" v-bind:value="size.sizename">
+                                            {{ size.sizename }} ({{ size.size }})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="orderDialog-data">
+                                <div class="v-carousel-item__sizeTitle">Ваши контактные данные:</div>
+
+                                <label for="ordername" class="orderDialog-data-label">ФИО</label>
+                                <input class="orderDialog-data-item" type="text" name="ordername" id="ordername" v-model="orderName" :placeholder="orderName">
+
+                                <label for="orderphone" class="orderDialog-data-label">Телефон*</label>
+                                <input required :class="phoneClass()" type="tel" name="orderphone" id="orderphone" v-model="orderPhone" :placeholder="orderPhone">
+
+                                <label for="orderemail" class="orderDialog-data-label">Почта</label>
+                                <input class="orderDialog-data-item" type="email" name="orderemail" id="orderemail" v-model="orderEmail" :placeholder="orderEmail">
+
+                            </div>
+                            <div class="orderDelivery">
+                                
+                                <input type="checkbox" class="orderDelivery-checkbox" v-model="delivery" name="deliveryFlag" id="deliveryFlag">
+                                <label for="deliveryFlag" class="orderDelivery-checkbox-label">Включить доставку</label>
+                                <div v-if="delivery">
+                                    <label for="deliveryAddress" class="orderDialog-data-label">Адрес доставки:</label>
+                                    <textarea class="orderDialog-data-item orderDialog-data-area" name="deliveryAddress" id="deliveryAddress" rows="4"
+                                            v-model="orderAddress" :placeholder="orderAddress"></textarea>
+                                </div>
+                            </div>
+                            <div class="orderDialog__required">* - обязательное поле заполнения</div>
+                            <button type="submit" :class="orderBtnClass()" :disabled="!allowConfirm" @click="confirmOrder">Подтвердить заказ</button>
+                            
+                        </div>
+                    </div>
+                    <div v-else class="orderDialog__accepted">
+                       <div class="v-carousel-item__name">Ваш заказ принят</div>
+                       <button class="contactUs-btn" @click="closeOrderDialog">ОК</button>
+                    </div>
+                </div>`,
+    mounted() {
+        this.orderSize = this.selectedsize;
+    },
+    methods: {
+        isValidPhone(myPhone) {
+            return this.phoneRegExp.test(myPhone.replace(/\s/g, ''));
+        },
+        closeOrderDialog() {
+            this.$emit('closeOrderDialog')
+        },
+        prettify(num) {
+            var n = num.toString();
+            return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
+        },
+        orderBtnClass() {
+            return this.allowConfirm ? "contactUs-btn" : "contactUs-btn disabled-btn";
+        },
+        phoneClass() {
+            return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item error";
+        },
+        confirmOrder() {
+
+            console.log('Ваш заказ:');
+            console.log(this.name);
+            console.log(this.prettify(this.price) + " руб.");
+            console.log(this.orderSize);
+            console.log('Ваши данные:');
+            console.log(this.orderName);
+            console.log(this.orderPhone);
+            console.log(this.orderEmail);
+            if (delivery) {
+                console.log('Доставка по адресу:');
+                console.log(this.orderAddress);
+            }
+            this.orderNotAccepted = false
+        }
+    },
+    computed: {
+        allowConfirm() {
+            if (this.isValidPhone(this.orderPhone)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+}
 /**
  * Компонент карусели картинок набора
  */
@@ -70,19 +193,20 @@ const vCarouselSizesBlock = {
  */
 const VCarouselSizes = {
     name: 'v-carousel-sizes',
-    props: ['sizes'],
+    props: ['sizes', 'activesize'],
     components: {
         vCarouselSizesBlock
     },
     data: () => ({
-        activeSize: "M",
+        // activeSize: "M",
     }),
     template: `<div class="v-carousel-sizes">
-                <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activeSize" @setActiveSize = "setActiveSize" :key="size.sizename" />
+                <v-carousel-sizes-block v-for="size in sizes" :size="size" :activeSize="activesize" @setActiveSize = "setActiveSize" :key="size.sizename" />
             </div>`,
     methods: {
         setActiveSize(sizeName) {
-            this.activeSize = sizeName;
+            // this.activeSize = sizeName;
+            this.$emit('changesize', sizeName);
         }
     }
 
@@ -105,10 +229,13 @@ const VCarouselItem = {
     components: {
         VCarouselImages,
         VCarouselSizes,
-        VCarouselDescriptionListItem
+        VCarouselDescriptionListItem,
+        OrderDialog
     },
     data: () => ({
         descriptionOpened: false,
+        orderDialogOpened: false,
+        activeSize: "M",
     }),
     template: `<div class="v-carousel-item">
                     <v-carousel-images :images="card.picture" />
@@ -129,19 +256,28 @@ const VCarouselItem = {
                     
                         <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
                         <div class="v-carousel-item__sizeTitle">Размер</div>
-                        <v-carousel-sizes :sizes="card.sizes" />
+                        <v-carousel-sizes :sizes="card.sizes" :activesize="activeSize" @changesize="changeSize"/>
                     </div>
-                        <input type="button" class="v-carousel-item__button" value="Заказать"></input>
-                    
+                        <input type="button" class="v-carousel-item__button" value="Заказать" @click="openOrderDialog"></input>
+                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="card.price" :selectedsize="activeSize" :sizes="card.sizes" @closeOrderDialog="closeOrderDialog" />
                 </div>`,
     methods: {
+        changeSize(newSize) {
+            this.activeSize = newSize;
+        },
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
         },
         changeOpened() {
             this.descriptionOpened = !this.descriptionOpened;
-            console.log('descriptionOpened', this.descriptionOpened);
+            // console.log('descriptionOpened', this.descriptionOpened);
+        },
+        closeOrderDialog() {
+            this.orderDialogOpened = false;
+        },
+        openOrderDialog() {
+            this.orderDialogOpened = true;
         }
     },
     computed: {
@@ -313,52 +449,304 @@ const app = new Vue({
     // }
 });
 
-window.onload = window.onresize = setStyle;
 
-function setStyle() {
-    let elements = [...document.querySelectorAll('.text')];
-    let buttons = [...document.querySelectorAll('.check-btn')];
-    let lastItems = [...document.querySelectorAll('.lastItem')];
+window.onload = function () {
 
-    if (window.matchMedia("(min-width: 576px)").matches) {
-        elements.forEach(item => {
-            item.style.display = "block";
-        });
-    } else {
-        elements.forEach(item => {
-            item.style.display = "none";
-        });
-        buttons.forEach(button => {
-            button.removeAttribute('open');
-        });
-        lastItems.forEach(lastItem => {
-            lastItem.removeAttribute('open');
-        });
+    window.onresize = setStyle;
+
+    function setStyle() {
+        let elements = [...document.querySelectorAll('.text')];
+        let buttons = [...document.querySelectorAll('.check-btn')];
+        let lastItems = [...document.querySelectorAll('.lastItem')];
+
+        if (window.matchMedia("(min-width: 576px)").matches) {
+            elements.forEach(item => {
+                item.style.display = "block";
+            });
+        } else {
+            elements.forEach(item => {
+                item.style.display = "none";
+            });
+            buttons.forEach(button => {
+                button.removeAttribute('open');
+            });
+            lastItems.forEach(lastItem => {
+                lastItem.removeAttribute('open');
+            });
+        }
+    }
+
+    document.querySelectorAll(".check-btn").forEach(function (element) {
+        element.addEventListener("click", function () {
+
+                let display = this.parentNode.querySelector("p").style.display;
+
+                if (display === "block") {
+                    this.parentNode.querySelector("p").style.display = "none";
+                    element.removeAttribute('open');
+                } else {
+                    this.parentNode.querySelector("p").style.display = "block";
+                    element.setAttribute('open', 'open');
+                }
+
+                let lastItem = this.parentNode.classList.contains("lastItem");
+
+                if (lastItem && !element.parentElement.hasAttribute('open')) {
+                    element.parentElement.setAttribute('open', 'open');
+                } else if (lastItem && element.parentElement.hasAttribute('open')) {
+                    element.parentElement.removeAttribute('open');
+                }
+
+
+            },
+            false)
+    });
+}
+
+
+/*FORM-----------------------------------------------------------------------------------------------------------START*/
+
+
+let hiddenFormContainer = document.querySelector('.contactUs');
+let hiddenForm = document.querySelector('.contactUs-form');
+let confirm = document.querySelector('.confirm');
+
+let closeButton = document.querySelector(".close-btn");
+let confirmCloseButton = document.querySelector(".confirm-close-btn");
+
+closeButton.addEventListener('click', function () {
+    hiddenFormContainerClose();
+}, false);
+
+confirmCloseButton.addEventListener('click', function () {
+    hiddenFormContainerClose();
+}, false);
+
+
+/**
+ * Поведение формы при отправке
+ * */
+hiddenForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    let valid = formValidate();
+    if (valid) {
+        formClose();
+        confirmOpen();
+    }
+
+}, false);
+
+
+/**
+ * Закрытие контейнера формы
+ * */
+function hiddenFormContainerClose() {
+    formClose()
+    confirmClose()
+    hiddenFormContainer.style.display = "none";
+}
+
+/**
+ * Закрытие формы
+ * */
+function formClose() {
+    hiddenForm.style.display = "none";
+}
+
+/**
+ * Открытие формы
+ * */
+function formOpen() {
+    hiddenFormContainer.style.display = "block";
+    hiddenForm.style.display = "block";
+}
+
+let openButtons = document.querySelectorAll(".open-contactUs");
+openButtons.forEach(element => {
+    element.addEventListener('click', formOpen, false);
+})
+
+/**
+ * Открытие подтверждения об успешной отправке формы
+ * */
+function confirmOpen() {
+    confirm.style.display = "block";
+}
+
+/**
+ * Открытие подтверждения об успешной отправке формы
+ * */
+function confirmClose() {
+    confirm.style.display = "none";
+}
+
+
+/*__________________FORM-VALIDATION-----------------------------------------------------------------------------------*/
+
+
+let submitButton = hiddenFormContainer.querySelector('.contactUs-btn');
+let requiredText = hiddenFormContainer.querySelector('.required-text');
+let phoneField = hiddenFormContainer.querySelector('#phone');
+let emailField = hiddenFormContainer.querySelector('#email');
+
+let requiredItems = [phoneField, emailField]; //поля ввода, которые нужно валидировать
+
+/**
+ * Обработчики события конкретно на те поля ввода, которые нужно валидировать
+ * 1) валидация по событию 'blur'
+ * 2) валидация по событию 'input'
+ * */
+requiredItems.forEach(formField => {
+    formField.addEventListener('blur', formValidate, false);
+})
+requiredItems.forEach(formField => {
+    formField.addEventListener('input', formValidate, false);
+})
+
+/**
+ * Общая функция валидации формы
+ * */
+function formValidate() {
+    let checkPhone = isValidPhone(phoneField.value);
+    let checkEmail = isValidEmail(emailField.value);
+
+    clearErrors();
+
+    if (phoneField.value.length === 0) {
+        addErrorEmptyField();
+    } else if (!checkPhone) {
+        addErrorWrongPhone();
+    }
+
+    if (!checkEmail) addErrorWrongMail();
+
+    if (checkPhone && checkEmail) return true;
+}
+
+/**
+ * Валидация поля ввода телефонного номера
+ * */
+function isValidPhone(phone) {
+    return /^\+7\s\([3489][0-9]{2}\)\s[0-9]{3}\s[0-9]{2}\s[0-9]{2}$/.test(phone);
+    // return /^((8|\+7)[-\(]?[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/.test(phone); // источник https://habr.com/ru/post/110731/
+}
+
+/**
+ * Валидация поля ввода электронной почты
+ * */
+function isValidEmail(mail) {
+    // источник https://web.izjum.com/regexp-email-url-phone
+    return /^(?! )$|^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,4}$/.test(mail);
+}
+
+/**
+ * Предварительная очистка классов предупреждения об ошибке со всех элементов
+ * */
+function clearErrors() {
+    phoneField.classList.remove('error');
+    emailField.classList.remove('error');
+    requiredText.classList.remove('required-red');
+    submitButton.classList.remove('btn-empty-field');
+    submitButton.classList.remove('btn-error');
+    changeBtnValue("Отправить");
+}
+
+/**
+ * Добавление классов предупреждения об ошибке при пустом поле ввода телефонного номера
+ * */
+function addErrorEmptyField() {
+    phoneField.classList.add('error');
+    requiredText.classList.add('required-red');
+    submitButton.classList.add('btn-empty-field');
+}
+
+/**
+ * Добавление классов предупреждения об ошибке при неправильном вводе телефонного номера
+ * */
+function addErrorWrongPhone() {
+    phoneField.classList.add('error');
+    submitButton.classList.add('btn-error');
+    changeBtnValue("Ошибка");
+}
+
+/**
+ * Добавление классов предупреждения об ошибке при неправильном вводе электронной почты
+ * */
+function addErrorWrongMail() {
+    emailField.classList.add('error');
+    submitButton.classList.add('btn-error');
+    changeBtnValue("Ошибка");
+}
+
+/**
+ * Изменение названия кнопки - submitButton
+ * */
+function changeBtnValue(buttonValue) {
+    if (buttonValue) {
+        submitButton.value = buttonValue;
     }
 }
 
-document.querySelectorAll(".check-btn").forEach(function (element) {
-    element.addEventListener("click", function () {
 
-            let display = this.parentNode.querySelector("p").style.display;
-
-            if (display === "block") {
-                this.parentNode.querySelector("p").style.display = "none";
-                element.removeAttribute('open');
-            } else {
-                this.parentNode.querySelector("p").style.display = "block";
-                element.setAttribute('open', 'open');
-            }
-
-            let lastItem = this.parentNode.classList.contains("lastItem");
-
-            if (lastItem && !element.parentElement.hasAttribute('open')) {
-                element.parentElement.setAttribute('open', 'open');
-            } else if (lastItem && element.parentElement.hasAttribute('open')) {
-                element.parentElement.removeAttribute('open');
-            }
+/*___________________________маска для ввода телефонного номера_______________________________________________________*/
 
 
-        },
-        false)
+// https://javascript.ru/forum/dom-window/63870-kak-sdelat-masku-telefona-v-input-c-7-___-bez-jquery-4.html
+
+/**
+ * маска для ввода телефонного номера
+ * */
+window.addEventListener("DOMContentLoaded", function () {
+    function setCursorPosition(pos, elem) {
+        // elem.focus();
+        if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
+        /* else if (elem.createTextRange) {
+             var range = elem.createTextRange();
+             range.collapse(true);
+             range.moveEnd("character", pos);
+             range.moveStart("character", pos);
+             range.select()
+         }*/
+    }
+
+    function mask(event) {
+        if (this.selectionStart < 3) event.preventDefault();
+
+        let matrix = "+7 (___) ___ __ __",
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, "");
+
+        if (def.length >= val.length) val = def;
+
+        this.value = matrix.replace(/[_\d]/g, function (a) {
+            return i < val.length ? val.charAt(i++) : a
+        });
+
+        i = this.value.indexOf("_");
+
+        if (event.key === "Backspace") i = this.value.lastIndexOf(val.substr(-1)) + 1;
+
+        if (i !== -1) {
+            i < 5 && (i = 3);
+            this.value = this.value.slice(0, i);
+        }
+
+        if (event.type === "blur") {
+            if (this.value.length < 5) this.value = ""
+        } else setCursorPosition(this.value.length, this);
+
+    }
+
+    let input = document.querySelector("#phone");
+    input.addEventListener("input", mask, false);
+    input.addEventListener("focus", mask, false);
+    input.addEventListener("blur", mask, false);
+    input.addEventListener("keydown", mask, false);
 });
+
+
+/*___________________________маска для ввода телефонного номера_______________________________________________________*/
+
+
+/*FORM-------------------------------------------------------------------------------------------------------------END*/
