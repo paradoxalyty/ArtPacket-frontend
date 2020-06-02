@@ -1,102 +1,105 @@
 'use strict'
 
 /**
- *
+ * 
  */
 const OrderDialog = {
     name: 'order-dialog',
-    props: ['name', 'price', 'selectedsize', 'sizes'],
+    props: ['name', 'price', 'selectedsize', 'sizes', 'picture'],
     data: () => ({
         delivery: false,
         orderSize: "M",
-        orderName: "Ваше имя",
-        orderEmail: "pochta@mail.ru",
-        orderPhone: "+7 (___) ___ __ __",
-        orderAddress: "Адрес доставки",
+        orderName: null,
+        orderEmail: null,
+        orderPhone: null,
+        orderAddress: null,
         orderNotAccepted: true,
         phoneRegExp: /^\+*\d{1}\(?\d{3}\)?\d{3}-*\d{2}-*\d{2}$/,
     }),
-    template: `<div class="orderDialogBck">
+    template: `<div class="orderDialogBck" @keydown.27="closeOrderDialog">
                     <div v-if="orderNotAccepted" class="orderDialog">
                         
                         <div class="orderDialog-heading">
-                        Оформление заказа
+                        Заполните заявку
                         
                         <button class="close-btn" @click="closeOrderDialog">X</button>
                         </div>
                         <div class="orderDialog-form">
-                            <div class="v-carousel-item__name">
-                            {{name}}
-                            </div>
-                            <div class="v-carousel-item__price">
-                            {{this.prettify(price)}} руб.
-                            </div>
-                            <div class="v-carousel-item__sizeTitle">
-                            Размер: {{this.orderSize}}
-                                <div>
-                                    Изменить размер:
-                                    <select v-model="orderSize" class="orderDialog-select">
-                                        <option v-for="size in sizes" v-bind:value="size.sizename">
-                                            {{ size.sizename }} ({{ size.size }})
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
+                           
                             <div class="orderDialog-data">
-                                <div class="v-carousel-item__sizeTitle">Ваши контактные данные:</div>
-
                                 <label for="ordername" class="orderDialog-data-label">ФИО</label>
-                                <input class="orderDialog-data-item" type="text" name="ordername" id="ordername" v-model="orderName" :placeholder="orderName">
+                                <input class="orderDialog-data-item" type="text" name="ordername" id="ordername" v-model="orderName" placeholder="Ваше имя">
 
                                 <label for="orderphone" class="orderDialog-data-label">Телефон*</label>
-                                <input required :class="phoneClass()" type="tel" name="orderphone" id="orderphone" v-model="orderPhone" :placeholder="orderPhone">
+                                <input required :class="phoneClass()" type="tel" name="orderphone" id="orderphone" v-model="orderPhone" placeholder="+7 (___) ___ __ __">
 
                                 <label for="orderemail" class="orderDialog-data-label">Почта</label>
-                                <input class="orderDialog-data-item" type="email" name="orderemail" id="orderemail" v-model="orderEmail" :placeholder="orderEmail">
+                                <input class="orderDialog-data-item" type="email" name="orderemail" id="orderemail" v-model="orderEmail" placeholder="pochta@mail.ru">
 
                             </div>
-                            <div class="orderDelivery">
-                                
-                                <input type="checkbox" class="orderDelivery-checkbox" v-model="delivery" name="deliveryFlag" id="deliveryFlag">
-                                <label for="deliveryFlag" class="orderDelivery-checkbox-label">Включить доставку</label>
-                                <div v-if="delivery">
-                                    <label for="deliveryAddress" class="orderDialog-data-label">Адрес доставки:</label>
-                                    <textarea class="orderDialog-data-item orderDialog-data-area" name="deliveryAddress" id="deliveryAddress" rows="4"
-                                            v-model="orderAddress" :placeholder="orderAddress"></textarea>
+                            <div class="orderDialog-data-label orderDialog-data-label__order">
+                            Заказ
+                            </div>
+                            <div class="orderDialog-order">
+                                <div class="orderDialog-order-img">
+                                <img :src="picture[0]" alt="ArtSet picture" class="orderDialog-order-img__first">
+                                </div>
+                                <div class="orderDialog-order-details">
+                                    <table class="orderDialog-order-table">
+                                        <tr>
+                                            <td>Название:</td>
+                                            <td>{{name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Размер:</td>
+                                            <td>{{this.orderSize}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Цена:</td>
+                                            <td>{{this.prettify(price)}} руб.</td>
+                                        </tr>
+                                    </table>
+                                    
                                 </div>
                             </div>
+                            
                             <div class="orderDialog__required">* - обязательное поле заполнения</div>
-                            <button type="submit" :class="orderBtnClass()" :disabled="!allowConfirm" @click="confirmOrder">Подтвердить заказ</button>
+                            <button type="submit" :class="orderBtnClass()" :disabled="!allowConfirm" @click="confirmOrder">Отправить</button>
                             
                         </div>
                     </div>
                     <div v-else class="orderDialog__accepted">
-                       <div class="v-carousel-item__name">Ваш заказ принят</div>
-                       <button class="contactUs-btn" @click="closeOrderDialog">ОК</button>
+                       <div class="orderDialog__accepted__text">Ваш заказ принят!</div>
+                       <div class="orderDialog__accepted__text">Скоро мы с Вами свяжемся</div>
+                       <div class="orderDialog__accepted__close" @click="closeOrderDialog"></div>
                     </div>
                 </div>`,
-    mounted() {
+    mounted(){
         this.orderSize = this.selectedsize;
     },
     methods: {
-        isValidPhone(myPhone) {
-            return this.phoneRegExp.test(myPhone.replace(/\s/g, ''));
+        isValidPhone(myPhone) { 
+            if (myPhone){
+                return this.phoneRegExp.test(myPhone.replace(/\s/g, '')); 
+            } else {
+                return false;
+            }
         },
-        closeOrderDialog() {
+        closeOrderDialog(){
             this.$emit('closeOrderDialog')
         },
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
         },
-        orderBtnClass() {
+        orderBtnClass(){
             return this.allowConfirm ? "contactUs-btn" : "contactUs-btn disabled-btn";
         },
-        phoneClass() {
+        phoneClass(){
             return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item error";
         },
-        confirmOrder() {
-
+        confirmOrder(){
+            
             console.log('Ваш заказ:');
             console.log(this.name);
             console.log(this.prettify(this.price) + " руб.");
@@ -113,14 +116,14 @@ const OrderDialog = {
         }
     },
     computed: {
-        allowConfirm() {
-            if (this.isValidPhone(this.orderPhone)) {
+        allowConfirm(){
+            if (this.isValidPhone(this.orderPhone)){
                 return true;
             } else {
                 return false;
             }
         }
-    }
+    } 
 }
 /**
  * Компонент карусели картинок набора
@@ -250,7 +253,7 @@ const VCarouselItem = {
                         <div :class="this.descriptionClass">
                             <div class="v-carousel-description-title">Описание:</div>
                             <ul class="v-carousel-description-list">
-                                <v-carousel-description-list-item v-for="description in card.descriptions" :description="description" />
+                                <v-carousel-description-list-item v-for="(description, idx) in card.descriptions" :description="description" :key="getDescKey(idx)" />
                             </ul>
                         </div>
                     
@@ -259,10 +262,10 @@ const VCarouselItem = {
                         <v-carousel-sizes :sizes="card.sizes" :activesize="activeSize" @changesize="changeSize"/>
                     </div>
                         <input type="button" class="v-carousel-item__button" value="Заказать" @click="openOrderDialog"></input>
-                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="card.price" :selectedsize="activeSize" :sizes="card.sizes" @closeOrderDialog="closeOrderDialog" />
+                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="card.price" :selectedsize="activeSize" :sizes="card.sizes" :picture="card.picture" @closeOrderDialog="closeOrderDialog" />
                 </div>`,
     methods: {
-        changeSize(newSize) {
+        changeSize(newSize){
             this.activeSize = newSize;
         },
         prettify(num) {
@@ -276,8 +279,11 @@ const VCarouselItem = {
         closeOrderDialog() {
             this.orderDialogOpened = false;
         },
-        openOrderDialog() {
+        openOrderDialog(){
             this.orderDialogOpened = true;
+        },
+        getDescKey(idx){
+            return "desc" + this.card.id + idx.toString();
         }
     },
     computed: {
@@ -509,76 +515,31 @@ window.onload = function () {
 
 let hiddenFormContainer = document.querySelector('.contactUs');
 let hiddenForm = document.querySelector('.contactUs-form');
-let confirm = document.querySelector('.confirm');
-
-let closeButton = document.querySelector(".close-btn");
-let confirmCloseButton = document.querySelector(".confirm-close-btn");
-
-closeButton.addEventListener('click', function () {
-    hiddenFormContainerClose();
-}, false);
-
-confirmCloseButton.addEventListener('click', function () {
-    hiddenFormContainerClose();
-}, false);
-
-
-/**
- * Поведение формы при отправке
- * */
-hiddenForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    let valid = formValidate();
-    if (valid) {
-        formClose();
-        confirmOpen();
-    }
-
-}, false);
-
-
-/**
- * Закрытие контейнера формы
- * */
-function hiddenFormContainerClose() {
-    formClose()
-    confirmClose()
-    hiddenFormContainer.style.display = "none";
-}
 
 /**
  * Закрытие формы
  * */
-function formClose() {
-    hiddenForm.style.display = "none";
+function formClose(event) {
+    // event.preventDefault();
+    hiddenFormContainer.style.display = "none";
+    hiddenForm.classList.remove('opened');
 }
+
+let closeButton = document.querySelector(".close-btn");
+closeButton.addEventListener('click', formClose, false);
 
 /**
  * Открытие формы
  * */
 function formOpen() {
     hiddenFormContainer.style.display = "block";
-    hiddenForm.style.display = "block";
+    hiddenForm.classList.add('opened');
 }
 
 let openButtons = document.querySelectorAll(".open-contactUs");
 openButtons.forEach(element => {
     element.addEventListener('click', formOpen, false);
 })
-
-/**
- * Открытие подтверждения об успешной отправке формы
- * */
-function confirmOpen() {
-    confirm.style.display = "block";
-}
-
-/**
- * Открытие подтверждения об успешной отправке формы
- * */
-function confirmClose() {
-    confirm.style.display = "none";
-}
 
 
 /*__________________FORM-VALIDATION-----------------------------------------------------------------------------------*/
@@ -589,39 +550,29 @@ let requiredText = hiddenFormContainer.querySelector('.required-text');
 let phoneField = hiddenFormContainer.querySelector('#phone');
 let emailField = hiddenFormContainer.querySelector('#email');
 
-let requiredItems = [phoneField, emailField]; //поля ввода, которые нужно валидировать
+let requiredItems = [phoneField, emailField];
 
 /**
- * Обработчики события конкретно на те поля ввода, которые нужно валидировать
- * 1) валидация по событию 'blur'
- * 2) валидация по событию 'input'
+ * Обработчик события конкретно на те поля ввода, которые нужно валидировать
  * */
 requiredItems.forEach(formField => {
-    formField.addEventListener('blur', formValidate, false);
-})
-requiredItems.forEach(formField => {
-    formField.addEventListener('input', formValidate, false);
-})
+    formField.addEventListener('blur', function () {
+        let checkPhone = isValidPhone(phoneField.value);
+        let checkEmail = isValidEmail(emailField.value);
 
-/**
- * Общая функция валидации формы
- * */
-function formValidate() {
-    let checkPhone = isValidPhone(phoneField.value);
-    let checkEmail = isValidEmail(emailField.value);
+        clearErrors();
 
-    clearErrors();
+        if (phoneField.value.length === 0) {
+            addErrorEmptyField();
+        } else if (!checkPhone) {
+            addErrorWrongPhone();
+        }
 
-    if (phoneField.value.length === 0) {
-        addErrorEmptyField();
-    } else if (!checkPhone) {
-        addErrorWrongPhone();
-    }
-
-    if (!checkEmail) addErrorWrongMail();
-
-    if (checkPhone && checkEmail) return true;
-}
+        if (!checkEmail) {
+            addErrorWrongMail();
+        }
+    })
+});
 
 /**
  * Валидация поля ввода телефонного номера
@@ -750,3 +701,4 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 /*FORM-------------------------------------------------------------------------------------------------------------END*/
+
