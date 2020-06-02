@@ -533,11 +533,8 @@ confirmCloseButton.addEventListener('click', function () {
  * Поведение формы при отправке
  * */
 hiddenForm.addEventListener('submit', function (event) {
+    event.preventDefault();
     let valid = formValidate();
-
-    if (!valid) {
-        event.preventDefault();
-    }
 
     if (valid) {
         formClose();
