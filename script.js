@@ -257,7 +257,7 @@ const VCarouselItem = {
                             </ul>
                         </div>
                     
-                        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
+                        <div class="v-carousel-item__price">{{this.prettify(cardPrice)}} руб.</div>
                         <div class="v-carousel-item__sizeTitle">Размер</div>
                         <v-carousel-sizes :sizes="card.sizes" :activesize="activeSize" @changesize="changeSize"/>
                     </div>
@@ -292,6 +292,15 @@ const VCarouselItem = {
         },
         detailsClass() {
             return this.descriptionOpened ? "v-carousel-item__name__details" : "v-carousel-item__name__details v-carousel-item__name__details__rotated";
+        },
+        cardPrice(){
+            if (this.activeSize === "S"){
+                return 700;
+            } else if(this.activeSize === "M"){
+                return 1500;
+            }else{
+                return 2500;
+            }
         }
     }
 
@@ -389,8 +398,8 @@ const app = new Vue({
         artSetsData: [
             {
                 id: 1,
-                picture: ["./img/artSet_img.png", "./img/artSets-logo.png", "./img/artSet_img.png"],
-                name: "Название",
+                picture: ["./img/set_1.jpg", "./img/photo_1.jpg", "./img/artSet_img.png"],
+                name: "Море",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1100,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -398,8 +407,8 @@ const app = new Vue({
             },
             {
                 id: 2,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 2",
+                picture: ["./img/set_2.jpg", "./img/photo_2.jpg", "./img/artSet_img.png"],
+                name: "Мрамор",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1200,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -407,8 +416,8 @@ const app = new Vue({
             },
             {
                 id: 3,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 3",
+                picture: ["./img/set_3.jpg", "./img/photo_3.jpg", "./img/artSet_img.png"],
+                name: "Изумруд",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1300,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -416,8 +425,8 @@ const app = new Vue({
             },
             {
                 id: 4,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 4",
+                picture: ["./img/photo_4.jpg", "./img/set_4.jpg", "./img/artSet_img.png"],
+                name: "Срез дерева",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1400,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -425,8 +434,8 @@ const app = new Vue({
             },
             {
                 id: 5,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 5",
+                picture: ["./img/photo_5.jpg", "./img/set_5.jpg", "./img/artSet_img.png"],
+                name: "Океан",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1500,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -434,8 +443,8 @@ const app = new Vue({
             },
             {
                 id: 6,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 6",
+                picture: ["./img/photo_6.jpg", "./img/set_6.jpg", "./img/artSet_img.png"],
+                name: "Венера",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1600,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
