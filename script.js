@@ -262,7 +262,7 @@ const VCarouselItem = {
                         <v-carousel-sizes :sizes="card.sizes" :activesize="activeSize" @changesize="changeSize"/>
                     </div>
                         <input type="button" class="v-carousel-item__button" value="Заказать" @click="openOrderDialog"></input>
-                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="card.price" :selectedsize="activeSize" :sizes="card.sizes" :picture="card.picture" @closeOrderDialog="closeOrderDialog" />
+                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="cardPrice" :selectedsize="activeSize" :sizes="card.sizes" :picture="card.picture" @closeOrderDialog="closeOrderDialog" />
                 </div>`,
     methods: {
         changeSize(newSize){
