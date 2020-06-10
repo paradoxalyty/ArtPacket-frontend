@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- *
+ * 
  */
 const OrderDialog = {
     name: 'order-dialog',
@@ -74,32 +74,32 @@ const OrderDialog = {
                        <div class="orderDialog__accepted__close" @click="closeOrderDialog"></div>
                     </div>
                 </div>`,
-    mounted() {
+    mounted(){
         this.orderSize = this.selectedsize;
     },
     methods: {
-        isValidPhone(myPhone) {
-            if (myPhone) {
-                return this.phoneRegExp.test(myPhone.replace(/\s/g, ''));
+        isValidPhone(myPhone) { 
+            if (myPhone){
+                return this.phoneRegExp.test(myPhone.replace(/\s/g, '')); 
             } else {
                 return false;
             }
         },
-        closeOrderDialog() {
+        closeOrderDialog(){
             this.$emit('closeOrderDialog')
         },
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
         },
-        orderBtnClass() {
+        orderBtnClass(){
             return this.allowConfirm ? "contactUs-btn" : "contactUs-btn disabled-btn";
         },
-        phoneClass() {
+        phoneClass(){
             return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item error";
         },
-        confirmOrder() {
-
+        confirmOrder(){
+            
             console.log('Ваш заказ:');
             console.log(this.name);
             console.log(this.prettify(this.price) + " руб.");
@@ -116,14 +116,14 @@ const OrderDialog = {
         }
     },
     computed: {
-        allowConfirm() {
-            if (this.isValidPhone(this.orderPhone)) {
+        allowConfirm(){
+            if (this.isValidPhone(this.orderPhone)){
                 return true;
             } else {
                 return false;
             }
         }
-    }
+    } 
 }
 /**
  * Компонент карусели картинок набора
@@ -257,15 +257,15 @@ const VCarouselItem = {
                             </ul>
                         </div>
                     
-                        <div class="v-carousel-item__price">{{this.prettify(card.price)}} руб.</div>
+                        <div class="v-carousel-item__price">{{this.prettify(cardPrice)}} руб.</div>
                         <div class="v-carousel-item__sizeTitle">Размер</div>
                         <v-carousel-sizes :sizes="card.sizes" :activesize="activeSize" @changesize="changeSize"/>
                     </div>
                         <input type="button" class="v-carousel-item__button" value="Заказать" @click="openOrderDialog"></input>
-                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="card.price" :selectedsize="activeSize" :sizes="card.sizes" :picture="card.picture" @closeOrderDialog="closeOrderDialog" />
+                        <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="cardPrice" :selectedsize="activeSize" :sizes="card.sizes" :picture="card.picture" @closeOrderDialog="closeOrderDialog" />
                 </div>`,
     methods: {
-        changeSize(newSize) {
+        changeSize(newSize){
             this.activeSize = newSize;
         },
         prettify(num) {
@@ -279,10 +279,10 @@ const VCarouselItem = {
         closeOrderDialog() {
             this.orderDialogOpened = false;
         },
-        openOrderDialog() {
+        openOrderDialog(){
             this.orderDialogOpened = true;
         },
-        getDescKey(idx) {
+        getDescKey(idx){
             return "desc" + this.card.id + idx.toString();
         }
     },
@@ -292,6 +292,15 @@ const VCarouselItem = {
         },
         detailsClass() {
             return this.descriptionOpened ? "v-carousel-item__name__details" : "v-carousel-item__name__details v-carousel-item__name__details__rotated";
+        },
+        cardPrice(){
+            if (this.activeSize === "S"){
+                return 700;
+            } else if(this.activeSize === "M"){
+                return 1500;
+            }else{
+                return 2500;
+            }
         }
     }
 
@@ -389,8 +398,8 @@ const app = new Vue({
         artSetsData: [
             {
                 id: 1,
-                picture: ["./img/artSet_img.png", "./img/artSets-logo.png", "./img/artSet_img.png"],
-                name: "Название",
+                picture: ["./img/set_1.jpg", "./img/photo_1.jpg"],
+                name: "Море",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1100,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -398,8 +407,8 @@ const app = new Vue({
             },
             {
                 id: 2,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 2",
+                picture: ["./img/set_2.jpg", "./img/photo_2.jpg"],
+                name: "Мрамор",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1200,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -407,8 +416,8 @@ const app = new Vue({
             },
             {
                 id: 3,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 3",
+                picture: ["./img/set_3.jpg", "./img/photo_3.jpg"],
+                name: "Изумруд",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1300,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -416,8 +425,8 @@ const app = new Vue({
             },
             {
                 id: 4,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 4",
+                picture: ["./img/photo_4.jpg", "./img/set_4.jpg"],
+                name: "Срез дерева",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1400,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -425,8 +434,8 @@ const app = new Vue({
             },
             {
                 id: 5,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 5",
+                picture: ["./img/photo_5.jpg", "./img/set_5.jpg"],
+                name: "Океан",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1500,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -434,8 +443,8 @@ const app = new Vue({
             },
             {
                 id: 6,
-                picture: ["./img/artSet_img.png", "./img/artSet_img.png", "./img/artSet_img.png"],
-                name: "Название 6",
+                picture: ["./img/photo_6.jpg", "./img/set_6.jpg"],
+                name: "Венера",
                 descriptions: ["Холст на подрамнике", "Краски", "Перчатки, защитная пленка", "Инструкция"],
                 price: 1600,
                 sizes: [{sizename: "S", size: 30}, {sizename: "M", size: 40}, {sizename: "L", size: 50}],
@@ -515,77 +524,31 @@ window.onload = function () {
 
 let hiddenFormContainer = document.querySelector('.contactUs');
 let hiddenForm = document.querySelector('.contactUs-form');
-let confirm = document.querySelector('.confirm');
-
-let closeButton = document.querySelector(".close-btn");
-let confirmCloseButton = document.querySelector(".confirm-close-btn");
-
-closeButton.addEventListener('click', function () {
-    hiddenFormContainerClose();
-}, false);
-
-confirmCloseButton.addEventListener('click', function () {
-    hiddenFormContainerClose();
-}, false);
-
-
-/**
- * Поведение формы при отправке
- * */
-hiddenForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    let valid = formValidate();
-
-    if (valid) {
-        formClose();
-        confirmOpen();
-    }
-
-}, false);
-
-
-/**
- * Закрытие контейнера формы
- * */
-function hiddenFormContainerClose() {
-    formClose()
-    confirmClose()
-    hiddenFormContainer.style.display = "none";
-}
 
 /**
  * Закрытие формы
  * */
-function formClose() {
-    hiddenForm.style.display = "none";
+function formClose(event) {
+    // event.preventDefault();
+    hiddenFormContainer.style.display = "none";
+    hiddenForm.classList.remove('opened');
 }
+
+let closeButton = document.querySelector(".close-btn");
+closeButton.addEventListener('click', formClose, false);
 
 /**
  * Открытие формы
  * */
 function formOpen() {
     hiddenFormContainer.style.display = "block";
-    hiddenForm.style.display = "block";
+    hiddenForm.classList.add('opened');
 }
 
 let openButtons = document.querySelectorAll(".open-contactUs");
 openButtons.forEach(element => {
     element.addEventListener('click', formOpen, false);
 })
-
-/**
- * Открытие подтверждения об успешной отправке формы
- * */
-function confirmOpen() {
-    confirm.style.display = "block";
-}
-
-/**
- * Открытие подтверждения об успешной отправке формы
- * */
-function confirmClose() {
-    confirm.style.display = "none";
-}
 
 
 /*__________________FORM-VALIDATION-----------------------------------------------------------------------------------*/
@@ -596,39 +559,29 @@ let requiredText = hiddenFormContainer.querySelector('.required-text');
 let phoneField = hiddenFormContainer.querySelector('#phone');
 let emailField = hiddenFormContainer.querySelector('#email');
 
-let requiredItems = [phoneField, emailField]; //поля ввода, которые нужно валидировать
+let requiredItems = [phoneField, emailField];
 
 /**
- * Обработчики события конкретно на те поля ввода, которые нужно валидировать
- * 1) валидация по событию 'blur'
- * 2) валидация по событию 'input'
+ * Обработчик события конкретно на те поля ввода, которые нужно валидировать
  * */
 requiredItems.forEach(formField => {
-    formField.addEventListener('blur', formValidate, false);
-})
-requiredItems.forEach(formField => {
-    formField.addEventListener('input', formValidate, false);
-})
+    formField.addEventListener('blur', function () {
+        let checkPhone = isValidPhone(phoneField.value);
+        let checkEmail = isValidEmail(emailField.value);
 
-/**
- * Общая функция валидации формы
- * */
-function formValidate() {
-    let checkPhone = isValidPhone(phoneField.value);
-    let checkEmail = isValidEmail(emailField.value);
+        clearErrors();
 
-    clearErrors();
+        if (phoneField.value.length === 0) {
+            addErrorEmptyField();
+        } else if (!checkPhone) {
+            addErrorWrongPhone();
+        }
 
-    if (phoneField.value.length === 0) {
-        addErrorEmptyField();
-    } else if (!checkPhone) {
-        addErrorWrongPhone();
-    }
-
-    if (!checkEmail) addErrorWrongMail();
-
-    if (checkPhone && checkEmail) return true;
-}
+        if (!checkEmail) {
+            addErrorWrongMail();
+        }
+    })
+});
 
 /**
  * Валидация поля ввода телефонного номера
@@ -754,6 +707,15 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 /*___________________________маска для ввода телефонного номера_______________________________________________________*/
+
+
+/**
+ * Отмена стандартного поведения формы
+ * */
+hiddenForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+}, false);
 
 
 /*FORM-------------------------------------------------------------------------------------------------------------END*/
