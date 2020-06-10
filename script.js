@@ -524,31 +524,77 @@ window.onload = function () {
 
 let hiddenFormContainer = document.querySelector('.contactUs');
 let hiddenForm = document.querySelector('.contactUs-form');
+let confirm = document.querySelector('.confirm');
+
+let closeButton = document.querySelector(".close-btn");
+let confirmCloseButton = document.querySelector(".confirm-close-btn");
+
+closeButton.addEventListener('click', function () {
+    hiddenFormContainerClose();
+}, false);
+
+confirmCloseButton.addEventListener('click', function () {
+    hiddenFormContainerClose();
+}, false);
+
+
+/**
+ * Поведение формы при отправке
+ * */
+hiddenForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    let valid = formValidate();
+
+    if (valid) {
+        formClose();
+        confirmOpen();
+    }
+
+}, false);
+
+
+/**
+ * Закрытие контейнера формы
+ * */
+function hiddenFormContainerClose() {
+    formClose()
+    confirmClose()
+    hiddenFormContainer.style.display = "none";
+}
 
 /**
  * Закрытие формы
  * */
-function formClose(event) {
-    // event.preventDefault();
-    hiddenFormContainer.style.display = "none";
-    hiddenForm.classList.remove('opened');
+function formClose() {
+    hiddenForm.style.display = "none";
 }
-
-let closeButton = document.querySelector(".close-btn");
-closeButton.addEventListener('click', formClose, false);
 
 /**
  * Открытие формы
  * */
 function formOpen() {
     hiddenFormContainer.style.display = "block";
-    hiddenForm.classList.add('opened');
+    hiddenForm.style.display = "block";
 }
 
 let openButtons = document.querySelectorAll(".open-contactUs");
 openButtons.forEach(element => {
     element.addEventListener('click', formOpen, false);
 })
+
+/**
+ * Открытие подтверждения об успешной отправке формы
+ * */
+function confirmOpen() {
+    confirm.style.display = "block";
+}
+
+/**
+ * Открытие подтверждения об успешной отправке формы
+ * */
+function confirmClose() {
+    confirm.style.display = "none";
+}
 
 
 /*__________________FORM-VALIDATION-----------------------------------------------------------------------------------*/
@@ -559,29 +605,39 @@ let requiredText = hiddenFormContainer.querySelector('.required-text');
 let phoneField = hiddenFormContainer.querySelector('#phone');
 let emailField = hiddenFormContainer.querySelector('#email');
 
-let requiredItems = [phoneField, emailField];
+let requiredItems = [phoneField, emailField]; //поля ввода, которые нужно валидировать
 
 /**
- * Обработчик события конкретно на те поля ввода, которые нужно валидировать
+ * Обработчики события конкретно на те поля ввода, которые нужно валидировать
+ * 1) валидация по событию 'blur'
+ * 2) валидация по событию 'input'
  * */
 requiredItems.forEach(formField => {
-    formField.addEventListener('blur', function () {
-        let checkPhone = isValidPhone(phoneField.value);
-        let checkEmail = isValidEmail(emailField.value);
+    formField.addEventListener('blur', formValidate, false);
+})
+requiredItems.forEach(formField => {
+    formField.addEventListener('input', formValidate, false);
+})
 
-        clearErrors();
+/**
+ * Общая функция валидации формы
+ * */
+function formValidate() {
+    let checkPhone = isValidPhone(phoneField.value);
+    let checkEmail = isValidEmail(emailField.value);
 
-        if (phoneField.value.length === 0) {
-            addErrorEmptyField();
-        } else if (!checkPhone) {
-            addErrorWrongPhone();
-        }
+    clearErrors();
 
-        if (!checkEmail) {
-            addErrorWrongMail();
-        }
-    })
-});
+    if (phoneField.value.length === 0) {
+        addErrorEmptyField();
+    } else if (!checkPhone) {
+        addErrorWrongPhone();
+    }
+
+    if (!checkEmail) addErrorWrongMail();
+
+    if (checkPhone && checkEmail) return true;
+}
 
 /**
  * Валидация поля ввода телефонного номера
@@ -707,15 +763,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 /*___________________________маска для ввода телефонного номера_______________________________________________________*/
-
-
-/**
- * Отмена стандартного поведения формы
- * */
-hiddenForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-}, false);
 
 
 /*FORM-------------------------------------------------------------------------------------------------------------END*/
