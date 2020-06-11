@@ -546,25 +546,18 @@ hiddenForm.addEventListener('submit', function (event) {
     let valid = formValidate();
 
     if (valid) {
-        formSubmit(event);
+        formSubmit();
     }
 
 }, false);
 
 /**
- * Функция собирает данные полей формы и отправляет их на сервер в формате JSON
+ *
  * */
 function formSubmit() {
+    let formData = new FormData(hiddenForm);
+
     let request = new XMLHttpRequest();
-
-    let inputValues = [];
-    let inputFields = document.querySelectorAll('.form-item');
-    inputFields.forEach(inputField => {
-        if (inputField.value) {
-            inputValues.push(`{${inputField.name}: ${inputField.value}}`);
-        }
-    })
-
     request.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             formClose();
@@ -574,7 +567,7 @@ function formSubmit() {
 
     request.open('POST', 'php/e-mail.php');
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    request.send(JSON.stringify(inputValues));
+    request.send(formData);
 }
 
 /**
