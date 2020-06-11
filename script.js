@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- * 
+ *
  */
 const OrderDialog = {
     name: 'order-dialog',
@@ -74,32 +74,32 @@ const OrderDialog = {
                        <div class="orderDialog__accepted__close" @click="closeOrderDialog"></div>
                     </div>
                 </div>`,
-    mounted(){
+    mounted() {
         this.orderSize = this.selectedsize;
     },
     methods: {
-        isValidPhone(myPhone) { 
-            if (myPhone){
-                return this.phoneRegExp.test(myPhone.replace(/\s/g, '')); 
+        isValidPhone(myPhone) {
+            if (myPhone) {
+                return this.phoneRegExp.test(myPhone.replace(/\s/g, ''));
             } else {
                 return false;
             }
         },
-        closeOrderDialog(){
+        closeOrderDialog() {
             this.$emit('closeOrderDialog')
         },
         prettify(num) {
             var n = num.toString();
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + ' ');
         },
-        orderBtnClass(){
+        orderBtnClass() {
             return this.allowConfirm ? "contactUs-btn" : "contactUs-btn disabled-btn";
         },
-        phoneClass(){
+        phoneClass() {
             return this.allowConfirm ? "orderDialog-data-item" : "orderDialog-data-item error";
         },
-        confirmOrder(){
-            
+        confirmOrder() {
+
             console.log('Ваш заказ:');
             console.log(this.name);
             console.log(this.prettify(this.price) + " руб.");
@@ -116,14 +116,14 @@ const OrderDialog = {
         }
     },
     computed: {
-        allowConfirm(){
-            if (this.isValidPhone(this.orderPhone)){
+        allowConfirm() {
+            if (this.isValidPhone(this.orderPhone)) {
                 return true;
             } else {
                 return false;
             }
         }
-    } 
+    }
 }
 /**
  * Компонент карусели картинок набора
@@ -265,7 +265,7 @@ const VCarouselItem = {
                         <order-dialog v-if="this.orderDialogOpened" :name="card.name" :price="cardPrice" :selectedsize="activeSize" :sizes="card.sizes" :picture="card.picture" @closeOrderDialog="closeOrderDialog" />
                 </div>`,
     methods: {
-        changeSize(newSize){
+        changeSize(newSize) {
             this.activeSize = newSize;
         },
         prettify(num) {
@@ -279,10 +279,10 @@ const VCarouselItem = {
         closeOrderDialog() {
             this.orderDialogOpened = false;
         },
-        openOrderDialog(){
+        openOrderDialog() {
             this.orderDialogOpened = true;
         },
-        getDescKey(idx){
+        getDescKey(idx) {
             return "desc" + this.card.id + idx.toString();
         }
     },
@@ -293,12 +293,12 @@ const VCarouselItem = {
         detailsClass() {
             return this.descriptionOpened ? "v-carousel-item__name__details" : "v-carousel-item__name__details v-carousel-item__name__details__rotated";
         },
-        cardPrice(){
-            if (this.activeSize === "S"){
+        cardPrice() {
+            if (this.activeSize === "S") {
                 return 700;
-            } else if(this.activeSize === "M"){
+            } else if (this.activeSize === "M") {
                 return 1500;
-            }else{
+            } else {
                 return 2500;
             }
         }
@@ -546,12 +546,36 @@ hiddenForm.addEventListener('submit', function (event) {
     let valid = formValidate();
 
     if (valid) {
-        formClose();
-        confirmOpen();
+        formSubmit(event);
     }
 
 }, false);
 
+/**
+ * Функция собирает данные полей формы и отправляет их на сервер в формате JSON
+ * */
+function formSubmit() {
+    let request = new XMLHttpRequest();
+
+    let inputValues = [];
+    let inputFields = document.querySelectorAll('.form-item');
+    inputFields.forEach(inputField => {
+        if (inputField.value) {
+            inputValues.push(`{${inputField.name}: ${inputField.value}}`);
+        }
+    })
+
+    request.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            formClose();
+            confirmOpen();
+        }
+    }
+
+    request.open('POST', 'php/e-mail.php');
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.send(JSON.stringify(inputValues));
+}
 
 /**
  * Закрытие контейнера формы
