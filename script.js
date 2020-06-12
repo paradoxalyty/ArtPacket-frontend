@@ -560,7 +560,7 @@ function formSubmit() {
     let method = "GET";
     let url = "https://developer.mozilla.org/";
 
-    request.open(method, url);
+    request.open(method, url, true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     request.onreadystatechange = function () {
