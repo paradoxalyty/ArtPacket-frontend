@@ -543,9 +543,8 @@ confirmCloseButton.addEventListener('click', function () {
  * */
 hiddenForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    let valid = formValidate();
 
-    if (valid) {
+    if (formValidate()) {
         formSubmit();
     }
 
@@ -556,17 +555,27 @@ hiddenForm.addEventListener('submit', function (event) {
  * */
 function formSubmit() {
     let formData = new FormData(hiddenForm);
-
     let request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            formClose();
-            confirmOpen();
-        }
-    }
 
-    request.open('POST', 'php/e-mail.php');
+    let method = "GET";
+    let url = "https://developer.mozilla.org/";
+
+    request.open(method, url);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    request.onreadystatechange = function () {
+        // In local files, status is 0 upon success in Mozilla Firefox
+        if (request.readyState === XMLHttpRequest.DONE) {
+            let status = request.status;
+            if (status === 0 || (status >= 200 && status < 400)) {
+                // The request has been completed successfully
+                formClose();
+                confirmOpen();
+            } else {
+                // Oh no! There has been an error with the request!
+            }
+        }
+    };
     request.send(formData);
 }
 
